@@ -13,14 +13,14 @@ require_once 'api.php';
 $api = new FoodicsAPI();
 
 // Load hidden products list
-$hiddenProductsFile = __DIR__ . '/hidden_products.json';
+$hiddenProductsFile = __DIR__ . '/hide/hidden_products.json';
 $hiddenProducts = [];
 if (file_exists($hiddenProductsFile)) {
     $hiddenProducts = json_decode(file_get_contents($hiddenProductsFile), true) ?? [];
 }
 
 // Load hidden categories list
-$hiddenCategoriesFile = __DIR__ . '/hidden_categories.json';
+$hiddenCategoriesFile = __DIR__ . '/hide/hidden_categories.json';
 $hiddenCategories = [];
 if (file_exists($hiddenCategoriesFile)) {
     $hiddenCategories = json_decode(file_get_contents($hiddenCategoriesFile), true) ?? [];
@@ -30,7 +30,6 @@ if (file_exists($hiddenCategoriesFile)) {
 
 // Get current page and category from URL
 $categoryId = isset($_GET['category']) ? $_GET['category'] : null;
-$forceSync = isset($_GET['sync']) && $_GET['sync'] === '1'; // Manual sync trigger
 $currentPage = $categoryId ? 'products' : 'categories';
 
 // Initialize variables
@@ -41,8 +40,8 @@ $error = null;
 
 try {
     if ($currentPage === 'categories') {
-        // Load categories (from cache if available, or API if cache expired)
-        $categories = $api->getCategories($forceSync);
+        // Load categories
+        $categories = $api->getCategories();
         
         // Filter out hidden categories
         $categories = array_filter($categories, function($cat) use ($hiddenCategories) {
@@ -51,14 +50,14 @@ try {
         $categories = array_values($categories); // Re-index array
     } else {
         // Load category details and products
-        $categories = $api->getCategories($forceSync);
+        $categories = $api->getCategories();
         $currentCategory = array_filter($categories, function($cat) use ($categoryId) {
             return $cat['id'] === $categoryId;
         });
         $currentCategory = !empty($currentCategory) ? reset($currentCategory) : null;
         
         if ($currentCategory) {
-            $products = $api->getProductsByCategory($categoryId, $forceSync);
+            $products = $api->getProductsByCategory($categoryId);
             
             // Filter out hidden products, inactive products, and deleted products
             $products = array_filter($products, function($product) use ($hiddenProducts) {
@@ -126,7 +125,7 @@ function getPriceFromModifiers($api, $product) {
         // Check if modifiers exist in product data (from API response)
         $modifiers = $product['modifiers'] ?? [];
         if (empty($modifiers)) {
-            // If not in product data, try to get product details from cache/API
+            // If not in product data, try to get product details
             try {
                 $productDetails = $api->getProductDetails($productId);
                 if ($productDetails) {
@@ -144,7 +143,25 @@ function getPriceFromModifiers($api, $product) {
         
         $singlePrice = null;
         $doublePrice = null;
+        $singleLabel = null;
+        $doubleLabel = null;
         $allPrices = [];
+        $priceOptions = []; // Store price with option name for custom labels
+        
+        // Products that need custom labels based on option names
+        $customLabelProducts = [
+            '994ed07c-fd1e-4862-8b6d-53e13404a819', // Mozzarella Stick - 2 PCs / 6 PCS
+            '994ed5de-93e2-405c-af7c-302e18820757', // Onion Rings - 2PCS / 6PCS
+        ];
+        
+        // Products that should show single price if all options have same price
+        $singlePriceProducts = [
+            '99707843-6a96-47d2-8ca1-e7164cd149e2', // Extra Burger / Capitol - all 40
+            '9c4bbbb1-11c8-4b3d-bef4-fbfe3d3f7056', // Sweet Corn - all 65
+        ];
+        
+        $needsCustomLabels = in_array($productId, $customLabelProducts);
+        $shouldShowSingleIfSame = in_array($productId, $singlePriceProducts);
         
         // Process all modifiers from product data
         foreach ($modifiers as $modifier) {
@@ -160,41 +177,40 @@ function getPriceFromModifiers($api, $product) {
                 continue;
             }
             
-            // For products with price 0, process all modifiers (they might be the source of pricing)
-            // For products with price > 0, only process size-related modifiers (exclude sauces/extras)
-            $productPrice = $product['price'] ?? 0;
-            $shouldProcessModifier = true;
-            
-            if ($productPrice > 0) {
-                // Product has a base price, only process size modifiers
-                $isSizeModifier = false;
-                $sizeKeywords = ['size', 'single', 'double', 'small', 'large', 'medium', 'regular', 'big', 'options', 'quantity', 'bun', 'pcs', 'pc', 'taste'];
-                foreach ($sizeKeywords as $keyword) {
-                    if (strpos($modifierName, $keyword) !== false) {
-                        $isSizeModifier = true;
-                        break;
-                    }
+            // Skip modifiers that are extras/addons/sauces (not sizes)
+            // Look for size-related keywords in modifier name
+            $isSizeModifier = false;
+            $sizeKeywords = ['size', 'single', 'double', 'small', 'large', 'medium', 'regular', 'big', 'options', 'quantity', 'bun', 'pcs', 'pc', 'taste'];
+            foreach ($sizeKeywords as $keyword) {
+                if (strpos($modifierName, $keyword) !== false) {
+                    $isSizeModifier = true;
+                    break;
                 }
-                
-                // Exclude modifiers that are extras/addons/sauces (not sizes) when product has base price
-                $excludeKeywords = ['sauce', 'extra', 'addon', 'add-on', 'topping'];
-                $isExcluded = false;
+            }
+            
+            // Also check if modifier name suggests it's NOT a size (sauce, extra, etc.)
+            // Exceptions: Products that should use modifier prices even if modifier name contains exclude keywords
+            $isSaucesProduct = ($productId === '994ed5de-9567-4a80-bfb4-fedac126d132');
+            $isExtraBurgerProduct = ($productId === '99707843-6a96-47d2-8ca1-e7164cd149e2');
+            $shouldProcessModifier = ($isSaucesProduct || $isExtraBurgerProduct || $shouldShowSingleIfSame);
+            
+            $excludeKeywords = ['sauce', 'extra', 'addon', 'add-on', 'topping'];
+            $isExcluded = false;
+            if (!$shouldProcessModifier) {
                 foreach ($excludeKeywords as $keyword) {
                     if (strpos($modifierName, $keyword) !== false && !$isSizeModifier) {
                         $isExcluded = true;
                         break;
                     }
                 }
-                
-                if ($isExcluded) {
-                    $shouldProcessModifier = false;
-                }
             }
-            // If product price is 0, process all modifiers (they are likely the source of pricing)
             
-            if (!$shouldProcessModifier) {
+            // If it's excluded, skip it
+            if ($isExcluded) {
                 continue;
             }
+            
+            // If no size keywords found and no exclude keywords, still process it (might be quantity-based like "Bun Quantity" or "Sauces Type")
             
             // Process options from modifier
             foreach ($options as $option) {
@@ -203,36 +219,93 @@ function getPriceFromModifiers($api, $product) {
                     continue;
                 }
                 
-                $optionName = strtolower($option['name'] ?? '');
+                $optionName = $option['name'] ?? '';
+                $optionNameLower = strtolower($optionName);
                 $optionPrice = isset($option['price']) ? floatval($option['price']) : 0;
                 
                 if ($optionPrice > 0) {
                     $allPrices[] = $optionPrice;
                     
+                    // For custom label products, store option name with price
+                    if ($needsCustomLabels) {
+                        $priceOptions[] = [
+                            'price' => $optionPrice,
+                            'name' => $optionName
+                        ];
+                    }
+                    
                     // Check if this is a single or double size
-                    if (strpos($optionName, 'single') !== false || strpos($optionName, 'small') !== false || strpos($optionName, 'regular') !== false || strpos($optionName, '1 ') !== false || strpos($optionName, '2 ') !== false || strpos($optionName, 'original') !== false || strpos($optionName, 'spicy') !== false || strpos($optionName, 'ranch') !== false || strpos($optionName, 'buffalo') !== false) {
+                    if (strpos($optionNameLower, 'single') !== false || strpos($optionNameLower, 'small') !== false || strpos($optionNameLower, 'regular') !== false || strpos($optionNameLower, '1 ') !== false || strpos($optionNameLower, '2 ') !== false || strpos($optionNameLower, 'original') !== false || strpos($optionNameLower, 'spicy') !== false || strpos($optionNameLower, 'ranch') !== false || strpos($optionNameLower, 'buffalo') !== false) {
                         if ($singlePrice === null || $optionPrice < ($singlePrice ?: 999999)) {
                             $singlePrice = $optionPrice;
+                            if ($needsCustomLabels) {
+                                $singleLabel = $optionName;
+                            }
                         }
-                    } elseif (strpos($optionName, 'double') !== false || strpos($optionName, 'large') !== false || strpos($optionName, 'big') !== false || strpos($optionName, '3 ') !== false || strpos($optionName, '6 ') !== false) {
+                    } elseif (strpos($optionNameLower, 'double') !== false || strpos($optionNameLower, 'large') !== false || strpos($optionNameLower, 'big') !== false || strpos($optionNameLower, '3 ') !== false || strpos($optionNameLower, '6 ') !== false) {
                         if ($doublePrice === null || $optionPrice > ($doublePrice ?: 0)) {
                             $doublePrice = $optionPrice;
+                            if ($needsCustomLabels) {
+                                $doubleLabel = $optionName;
+                            }
                         }
                     }
                 }
             }
         }
         
+        // For custom label products, extract labels from option names
+        if ($needsCustomLabels && count($priceOptions) == 2) {
+            // Sort by price
+            usort($priceOptions, function($a, $b) {
+                return $a['price'] <=> $b['price'];
+            });
+            
+            $singlePrice = $priceOptions[0]['price'];
+            $doublePrice = $priceOptions[1]['price'];
+            
+            // Extract label from option name (e.g., "2 PCs Onion Ring" -> "2PCS", "6 PCs" -> "6PCS")
+            // Look for pattern like "2 PCs", "6 PCS", etc.
+            $singleName = $priceOptions[0]['name'];
+            $doubleName = $priceOptions[1]['name'];
+            
+            // Extract number and PCS from option name
+            if (preg_match('/(\d+)\s*(?:PC|PCS|pc|pcs)/i', $singleName, $matches)) {
+                $singleLabel = $matches[1] . 'PCS';
+            } else {
+                $singleLabel = '2PCS'; // Default fallback
+            }
+            
+            if (preg_match('/(\d+)\s*(?:PC|PCS|pc|pcs)/i', $doubleName, $matches)) {
+                $doubleLabel = $matches[1] . 'PCS';
+            } else {
+                $doubleLabel = '6PCS'; // Default fallback
+            }
+        }
+        
         // If we have exactly 2 prices and haven't identified single/double yet, treat as single/double
-        if (count($allPrices) == 2 && ($singlePrice === null || $doublePrice === null)) {
+        if (count($allPrices) == 2 && ($singlePrice === null || $doublePrice === null) && !$needsCustomLabels) {
             sort($allPrices);
             $singlePrice = $allPrices[0];
             $doublePrice = $allPrices[1];
         }
         
+        // For products that should show single price if all are same
+        if ($shouldShowSingleIfSame && !empty($allPrices)) {
+            $uniquePrices = array_unique($allPrices);
+            if (count($uniquePrices) == 1) {
+                return reset($uniquePrices); // Return single price
+            }
+        }
+        
         // Return prices based on what we found
         if ($singlePrice !== null && $doublePrice !== null) {
-            return ['single' => $singlePrice, 'double' => $doublePrice];
+            $result = ['single' => $singlePrice, 'double' => $doublePrice];
+            if ($needsCustomLabels && $singleLabel && $doubleLabel) {
+                $result['single_label'] = $singleLabel;
+                $result['double_label'] = $doubleLabel;
+            }
+            return $result;
         } elseif ($singlePrice !== null) {
             return $singlePrice;
         } elseif ($doublePrice !== null) {
@@ -284,9 +357,7 @@ function getPlaceholderImage($text) {
                     <?php if ($currentPage === 'products'): ?>
                         <a href="index.php" class="back-btn">← Back to Categories</a>
                     <?php endif; ?>
-                    <?php if (isset($_GET['sync']) && $_GET['sync'] === '1'): ?>
-                        <span style="color: green; font-size: 0.9em;">✓ Data synced</span>
-                    <?php endif; ?>
+                    
                 </div>
             </div>
         </nav>
@@ -370,13 +441,24 @@ function getPlaceholderImage($text) {
                                     if (is_array($modifierPrice)) {
                                         // Check if it's single/double prices
                                         if (isset($modifierPrice['single']) && isset($modifierPrice['double'])) {
-                                            // Custom labels for Bun product
-                                            $singleLabel = '(Single)';
-                                            $doubleLabel = '(Double)';
+                                            // Use custom labels if provided, otherwise default labels
+                                            $singleLabel = $modifierPrice['single_label'] ?? '(Single)';
+                                            $doubleLabel = $modifierPrice['double_label'] ?? '(Double)';
+                                            
+                                            // Special case for Bun product
                                             if ($product['id'] === '995ac081-2b3a-4442-96b4-aae0e5bb380a') {
                                                 $singleLabel = '(1 Bun)';
                                                 $doubleLabel = '(3 Bun)';
                                             }
+                                            
+                                            // Format labels with parentheses if not already present
+                                            if (!empty($singleLabel) && $singleLabel[0] !== '(') {
+                                                $singleLabel = '(' . $singleLabel . ')';
+                                            }
+                                            if (!empty($doubleLabel) && $doubleLabel[0] !== '(') {
+                                                $doubleLabel = '(' . $doubleLabel . ')';
+                                            }
+                                            
                                             $displayPrice = formatPrice($modifierPrice['single']) . ' <span style="font-size: 0.85em; color: #666;">' . $singleLabel . '</span> / ' . formatPrice($modifierPrice['double']) . ' <span style="font-size: 0.85em; color: #666;">' . $doubleLabel . '</span>';
                                         } elseif (isset($modifierPrice['min']) && isset($modifierPrice['max'])) {
                                             // Price range

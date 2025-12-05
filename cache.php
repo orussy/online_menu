@@ -1,7 +1,7 @@
 <?php
 /**
- * Cache Manager for Foodics API Data
- * Stores and syncs data every 5 hours
+ * Cache Management System
+ * Handles caching of API responses to reduce API calls and improve performance
  */
 
 // Prevent direct access
@@ -12,11 +12,11 @@ if (!defined('ALLOW_INCLUDE')) {
 
 class CacheManager {
     private $cacheDir;
-    private $cacheDuration; // 5 hours in seconds
+    private $cacheExpiry; // Cache expiry time in seconds (5 hours = 18000 seconds)
     
     public function __construct() {
         $this->cacheDir = __DIR__ . '/cache';
-        $this->cacheDuration = 5 * 60 * 60; // 5 hours
+        $this->cacheExpiry = 5 * 60 * 60; // 5 hours in seconds
         
         // Create cache directory if it doesn't exist
         if (!is_dir($this->cacheDir)) {
@@ -25,90 +25,118 @@ class CacheManager {
     }
     
     /**
-     * Check if cache is valid (not expired)
+     * Get cache file path for a given key
      */
-    private function isCacheValid($cacheFile) {
-        if (!file_exists($cacheFile)) {
-            return false;
-        }
-        
-        $cacheTime = filemtime($cacheFile);
-        $currentTime = time();
-        
-        return ($currentTime - $cacheTime) < $this->cacheDuration;
+    private function getCacheFilePath($key) {
+        $safeKey = preg_replace('/[^a-zA-Z0-9_-]/', '_', $key);
+        return $this->cacheDir . '/' . $safeKey . '.json';
     }
     
     /**
-     * Get cached data
+     * Get cached data if valid
      */
     public function get($key) {
-        $cacheFile = $this->cacheDir . '/' . $key . '.json';
+        $cacheFile = $this->getCacheFilePath($key);
         
-        if (!$this->isCacheValid($cacheFile)) {
+        if (!file_exists($cacheFile)) {
             return null;
         }
         
-        $data = file_get_contents($cacheFile);
-        $decoded = json_decode($data, true);
+        // Check if cache is expired
+        $fileTime = filemtime($cacheFile);
+        $currentTime = time();
         
+        if (($currentTime - $fileTime) > $this->cacheExpiry) {
+            // Cache expired, delete it
+            @unlink($cacheFile);
+            return null;
+        }
+        
+        // Read and return cached data
+        $content = file_get_contents($cacheFile);
+        if ($content === false) {
+            return null;
+        }
+        
+        $data = json_decode($content, true);
         if (json_last_error() !== JSON_ERROR_NONE) {
+            // Invalid JSON, delete cache file
+            @unlink($cacheFile);
             return null;
         }
         
-        return $decoded['data'] ?? null;
+        return $data;
     }
     
     /**
      * Store data in cache
      */
     public function set($key, $data) {
-        $cacheFile = $this->cacheDir . '/' . $key . '.json';
+        $cacheFile = $this->getCacheFilePath($key);
         
-        $cacheData = [
-            'data' => $data,
-            'cached_at' => time(),
-            'cached_at_readable' => date('Y-m-d H:i:s')
-        ];
-        
-        file_put_contents($cacheFile, json_encode($cacheData, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
-    }
-    
-    /**
-     * Force sync (clear cache and mark for refresh)
-     */
-    public function clear($key = null) {
-        if ($key) {
-            $cacheFile = $this->cacheDir . '/' . $key . '.json';
-            if (file_exists($cacheFile)) {
-                unlink($cacheFile);
-            }
-        } else {
-            // Clear all cache files
-            $files = glob($this->cacheDir . '/*.json');
-            foreach ($files as $file) {
-                unlink($file);
-            }
+        $jsonData = json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+        if ($jsonData === false) {
+            error_log('Failed to encode cache data for key: ' . $key);
+            return false;
         }
+        
+        $result = file_put_contents($cacheFile, $jsonData, LOCK_EX);
+        if ($result === false) {
+            error_log('Failed to write cache file: ' . $cacheFile);
+            return false;
+        }
+        
+        return true;
     }
     
     /**
-     * Get cache age in seconds
+     * Check if cache is valid (exists and not expired)
      */
-    public function getCacheAge($key) {
-        $cacheFile = $this->cacheDir . '/' . $key . '.json';
+    public function isValid($key) {
+        $cacheFile = $this->getCacheFilePath($key);
         
         if (!file_exists($cacheFile)) {
-            return null;
+            return false;
         }
         
-        $cacheTime = filemtime($cacheFile);
-        return time() - $cacheTime;
+        $fileTime = filemtime($cacheFile);
+        $currentTime = time();
+        
+        return (($currentTime - $fileTime) <= $this->cacheExpiry);
     }
     
     /**
-     * Check if sync is needed
+     * Clear specific cache entry
      */
-    public function needsSync($key) {
-        return !$this->isCacheValid($this->cacheDir . '/' . $key . '.json');
+    public function clear($key) {
+        $cacheFile = $this->getCacheFilePath($key);
+        if (file_exists($cacheFile)) {
+            return @unlink($cacheFile);
+        }
+        return true;
+    }
+    
+    /**
+     * Clear all cache
+     */
+    public function clearAll() {
+        $files = glob($this->cacheDir . '/*.json');
+        $deleted = 0;
+        foreach ($files as $file) {
+            if (is_file($file)) {
+                if (@unlink($file)) {
+                    $deleted++;
+                }
+            }
+        }
+        return $deleted;
+    }
+    
+    /**
+     * Force refresh cache (clear and mark for refresh)
+     */
+    public function refresh($key) {
+        return $this->clear($key);
     }
 }
+

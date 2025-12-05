@@ -9,20 +9,11 @@
     Deny from all
 </Files>
 
-<Files "hidden_products.json">
-    Order Allow,Deny
-    Deny from all
-</Files>
-
-<Files "hidden_categories.json">
-    Order Allow,Deny
-    Deny from all
-</Files>
-
-<Files "cache.php">
-    Order Allow,Deny
-    Deny from all
-</Files>
+# Protect hide directory
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule ^hide/ - [F,L]
+</IfModule>
 
 <Files "README.md">
     Order Allow,Deny
@@ -34,11 +25,21 @@
     Deny from all
 </Files>
 
-# Block direct access to cache directory
-<FilesMatch "^cache/">
+<Files "sync.php">
     Order Allow,Deny
     Deny from all
-</FilesMatch>
+</Files>
+
+<Files "cache.php">
+    Order Allow,Deny
+    Deny from all
+</Files>
+
+# Protect cache directory
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule ^cache/ - [F,L]
+</IfModule>
 
 # Prevent directory listing
 Options -Indexes

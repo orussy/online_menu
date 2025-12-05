@@ -97,18 +97,19 @@ class FoodicsAPI {
 
     /**
      * Get all categories (handles pagination)
+     * Uses cache with 5-hour expiration
      */
-    public function getCategories($forceRefresh = false) {
+    public function getCategories() {
+        $cacheKey = 'categories_all';
+        
+        // Try to get from cache first
+        $cached = $this->cache->get($cacheKey);
+        if ($cached !== null) {
+            return $cached;
+        }
+        
+        // Cache miss or expired, fetch from API
         try {
-            // Check cache first
-            if (!$forceRefresh) {
-                $cached = $this->cache->get('categories');
-                if ($cached !== null) {
-                    return $cached;
-                }
-            }
-            
-            // Cache miss or force refresh - fetch from API
             $allCategories = [];
             $currentPage = 1;
             $hasMorePages = true;
@@ -139,17 +140,10 @@ class FoodicsAPI {
             }
             
             // Store in cache
-            $this->cache->set('categories', $allCategories);
+            $this->cache->set($cacheKey, $allCategories);
             
             return $allCategories;
         } catch (Exception $e) {
-            // If API fails, try to return cached data even if expired
-            $cached = $this->cache->get('categories');
-            if ($cached !== null) {
-                error_log('API error, using cached categories: ' . $e->getMessage());
-                return $cached;
-            }
-            
             error_log('Error fetching categories: ' . $e->getMessage());
             throw $e;
         }
@@ -157,20 +151,19 @@ class FoodicsAPI {
 
     /**
      * Get products by category ID
+     * Uses cache with 5-hour expiration
      */
-    public function getProductsByCategory($categoryId, $forceRefresh = false) {
+    public function getProductsByCategory($categoryId) {
+        $cacheKey = 'category_' . $categoryId;
+        
+        // Try to get from cache first
+        $cached = $this->cache->get($cacheKey);
+        if ($cached !== null) {
+            return $cached;
+        }
+        
+        // Cache miss or expired, fetch from API
         try {
-            $cacheKey = 'products_category_' . $categoryId;
-            
-            // Check cache first
-            if (!$forceRefresh) {
-                $cached = $this->cache->get($cacheKey);
-                if ($cached !== null) {
-                    return $cached;
-                }
-            }
-            
-            // Cache miss or force refresh - fetch from API
             $response = $this->fetch("categories/$categoryId");
             $products = $response['data']['products'] ?? [];
             
@@ -186,14 +179,6 @@ class FoodicsAPI {
             
             return $activeProducts;
         } catch (Exception $e) {
-            // If API fails, try to return cached data even if expired
-            $cacheKey = 'products_category_' . $categoryId;
-            $cached = $this->cache->get($cacheKey);
-            if ($cached !== null) {
-                error_log('API error, using cached products for category ' . $categoryId . ': ' . $e->getMessage());
-                return $cached;
-            }
-            
             error_log('Error fetching products: ' . $e->getMessage());
             throw $e;
         }
@@ -242,38 +227,29 @@ class FoodicsAPI {
 
     /**
      * Get product details including modifiers
+     * Uses cache with 5-hour expiration
      */
-    public function getProductDetails($productId, $forceRefresh = false) {
+    public function getProductDetails($productId) {
+        $cacheKey = 'product_' . $productId;
+        
+        // Try to get from cache first
+        $cached = $this->cache->get($cacheKey);
+        if ($cached !== null) {
+            return $cached;
+        }
+        
+        // Cache miss or expired, fetch from API
         try {
-            $cacheKey = 'product_' . $productId;
-            
-            // Check cache first
-            if (!$forceRefresh) {
-                $cached = $this->cache->get($cacheKey);
-                if ($cached !== null) {
-                    return $cached;
-                }
-            }
-            
-            // Cache miss or force refresh - fetch from API
             $data = $this->fetch("products/$productId");
             $productData = $data['data'] ?? null;
             
-            if ($productData) {
+            if ($productData !== null) {
                 // Store in cache
                 $this->cache->set($cacheKey, $productData);
             }
             
             return $productData;
         } catch (Exception $e) {
-            // If API fails, try to return cached data even if expired
-            $cacheKey = 'product_' . $productId;
-            $cached = $this->cache->get($cacheKey);
-            if ($cached !== null) {
-                error_log('API error, using cached product ' . $productId . ': ' . $e->getMessage());
-                return $cached;
-            }
-            
             error_log('Error fetching product details: ' . $e->getMessage());
             throw $e;
         }
@@ -322,20 +298,19 @@ class FoodicsAPI {
 
     /**
      * Get modifier details including options
+     * Uses cache with 5-hour expiration
      */
-    public function getModifierDetails($modifierId, $forceRefresh = false) {
+    public function getModifierDetails($modifierId) {
+        $cacheKey = 'modifier_' . $modifierId;
+        
+        // Try to get from cache first
+        $cached = $this->cache->get($cacheKey);
+        if ($cached !== null) {
+            return $cached;
+        }
+        
+        // Cache miss or expired, fetch from API
         try {
-            $cacheKey = 'modifier_' . $modifierId;
-            
-            // Check cache first
-            if (!$forceRefresh) {
-                $cached = $this->cache->get($cacheKey);
-                if ($cached !== null) {
-                    return $cached;
-                }
-            }
-            
-            // Cache miss or force refresh - fetch from API
             $data = $this->fetch("modifiers/$modifierId");
             if (isset($data['data'])) {
                 // Filter out deleted options and inactive options
@@ -363,16 +338,30 @@ class FoodicsAPI {
             }
             return null;
         } catch (Exception $e) {
-            // If API fails, try to return cached data even if expired
-            $cacheKey = 'modifier_' . $modifierId;
-            $cached = $this->cache->get($cacheKey);
-            if ($cached !== null) {
-                error_log('API error, using cached modifier ' . $modifierId . ': ' . $e->getMessage());
-                return $cached;
-            }
-            
             error_log('Error fetching modifier details: ' . $e->getMessage());
             throw $e;
+        }
+    }
+    
+    /**
+     * Clear cache for specific item or all cache
+     */
+    public function clearCache($key = null) {
+        if ($key === null) {
+            return $this->cache->clearAll();
+        } else {
+            return $this->cache->clear($key);
+        }
+    }
+    
+    /**
+     * Force refresh cache (clear and will be refetched on next request)
+     */
+    public function refreshCache($key = null) {
+        if ($key === null) {
+            return $this->cache->clearAll();
+        } else {
+            return $this->cache->refresh($key);
         }
     }
 }
