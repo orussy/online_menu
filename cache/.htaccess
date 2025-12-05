@@ -1,4 +1,0 @@
-# Deny all access to cache directory
-Order Allow,Deny
-Deny from all
-

@@ -9,11 +9,25 @@
     Deny from all
 </Files>
 
-# Protect hide directory
-<IfModule mod_rewrite.c>
-    RewriteEngine On
-    RewriteRule ^hide/ - [F,L]
-</IfModule>
+<Files "cache.php">
+    Order Allow,Deny
+    Deny from all
+</Files>
+
+<Files "database.php">
+    Order Allow,Deny
+    Deny from all
+</Files>
+
+<Files "sync.php">
+    Order Allow,Deny
+    Deny from all
+</Files>
+
+<Files "cache_database.sql">
+    Order Allow,Deny
+    Deny from all
+</Files>
 
 <Files "README.md">
     Order Allow,Deny
@@ -25,20 +39,10 @@
     Deny from all
 </Files>
 
-<Files "sync.php">
-    Order Allow,Deny
-    Deny from all
-</Files>
-
-<Files "cache.php">
-    Order Allow,Deny
-    Deny from all
-</Files>
-
-# Protect cache directory
+# Protect hide directory
 <IfModule mod_rewrite.c>
     RewriteEngine On
-    RewriteRule ^cache/ - [F,L]
+    RewriteRule ^hide/ - [F,L]
 </IfModule>
 
 # Prevent directory listing

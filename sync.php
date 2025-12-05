@@ -74,31 +74,40 @@ try {
             
         case 'status':
         default:
-            // Get cache status
-            $cacheDir = __DIR__ . '/cache';
-            $files = glob($cacheDir . '/*.json');
-            $cacheInfo = [];
-            
-            foreach ($files as $file) {
-                $key = basename($file, '.json');
-                $fileTime = filemtime($file);
-                $age = time() - $fileTime;
-                $ageHours = round($age / 3600, 2);
+            // Get cache status from database
+            try {
+                require_once 'database.php';
+                $db = Database::getInstance();
+                $pdo = $db->getConnection();
                 
-                $cacheInfo[] = [
-                    'key' => $key,
-                    'age_hours' => $ageHours,
-                    'expired' => $age > (5 * 3600),
-                    'size' => filesize($file)
-                ];
+                $stmt = $pdo->query("
+                    SELECT 
+                        cache_key,
+                        TIMESTAMPDIFF(HOUR, created_at, NOW()) as age_hours,
+                        expires_at <= NOW() as expired,
+                        LENGTH(cache_data) as size,
+                        created_at,
+                        updated_at
+                    FROM cache
+                    ORDER BY created_at DESC
+                ");
+                $cacheInfo = $stmt->fetchAll();
+                
+                // Clean expired entries
+                $cache->cleanExpired();
+                
+                echo json_encode([
+                    'success' => true,
+                    'cache_expiry_hours' => 5,
+                    'total_entries' => count($cacheInfo),
+                    'entries' => $cacheInfo
+                ]);
+            } catch (Exception $e) {
+                echo json_encode([
+                    'success' => false,
+                    'error' => $e->getMessage()
+                ]);
             }
-            
-            echo json_encode([
-                'success' => true,
-                'cache_expiry_hours' => 5,
-                'total_files' => count($files),
-                'files' => $cacheInfo
-            ]);
             break;
     }
 } catch (Exception $e) {
