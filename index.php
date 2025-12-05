@@ -197,6 +197,7 @@ function getPriceFromModifiers($api, $product, $productModifierPrices = []) {
                                 $allPrices[] = $optionPrice;
                                 
                                 // Check if this is a single or double size
+                                // Look for keywords first
                                 if (strpos($optionName, 'single') !== false || strpos($optionName, 'small') !== false || strpos($optionName, 'regular') !== false) {
                                     if ($singlePrice === null || $optionPrice < $singlePrice) {
                                         $singlePrice = $optionPrice;
@@ -207,6 +208,13 @@ function getPriceFromModifiers($api, $product, $productModifierPrices = []) {
                                     }
                                 }
                             }
+                        }
+                        
+                        // If we have exactly 2 prices and haven't identified single/double yet, treat as single/double
+                        if (count($allPrices) == 2 && ($singlePrice === null || $doublePrice === null)) {
+                            sort($allPrices);
+                            $singlePrice = $allPrices[0];
+                            $doublePrice = $allPrices[1];
                         }
                         
                         // Return prices based on what we found
@@ -453,7 +461,14 @@ function getPlaceholderImage($text) {
                                     if (is_array($modifierPrice)) {
                                         // Check if it's single/double prices
                                         if (isset($modifierPrice['single']) && isset($modifierPrice['double'])) {
-                                            $displayPrice = formatPrice($modifierPrice['single']) . ' <span style="font-size: 0.85em; color: #666;">(Single)</span> / ' . formatPrice($modifierPrice['double']) . ' <span style="font-size: 0.85em; color: #666;">(Double)</span>';
+                                            // Custom labels for Bun product
+                                            $singleLabel = '(Single)';
+                                            $doubleLabel = '(Double)';
+                                            if ($product['id'] === '995ac081-2b3a-4442-96b4-aae0e5bb380a') {
+                                                $singleLabel = '(1 Bun)';
+                                                $doubleLabel = '(3 Bun)';
+                                            }
+                                            $displayPrice = formatPrice($modifierPrice['single']) . ' <span style="font-size: 0.85em; color: #666;">' . $singleLabel . '</span> / ' . formatPrice($modifierPrice['double']) . ' <span style="font-size: 0.85em; color: #666;">' . $doubleLabel . '</span>';
                                         } elseif (isset($modifierPrice['min']) && isset($modifierPrice['max'])) {
                                             // Price range
                                             $displayPrice = formatPrice($modifierPrice['min']) . ' - ' . formatPrice($modifierPrice['max']);
