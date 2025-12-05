@@ -376,6 +376,13 @@ function getPlaceholderImage($text) {
                 </div>
             </div>
         <?php endif; ?>
+        
+        <!-- Footer -->
+        <footer style="text-align: center; padding: 30px 20px; margin-top: 50px; color: white; opacity: 0.9;">
+            <p style="margin: 0; font-size: 14px;">
+                &copy; <?php echo date('Y'); ?> Designed by <strong>Omar Khaled</strong>
+            </p>
+        </footer>
     </div>
 </body>
 </html>

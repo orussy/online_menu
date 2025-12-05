@@ -273,3 +273,22 @@ body {
     }
 }
 
+/* Footer */
+footer {
+    text-align: center;
+    padding: 30px 20px;
+    margin-top: 50px;
+    color: white;
+    opacity: 0.9;
+}
+
+footer p {
+    margin: 0;
+    font-size: 14px;
+}
+
+footer strong {
+    color: #fff;
+    font-weight: 600;
+}
+
