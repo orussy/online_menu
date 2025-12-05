@@ -26,6 +26,17 @@ if (file_exists($hiddenCategoriesFile)) {
     $hiddenCategories = json_decode(file_get_contents($hiddenCategoriesFile), true) ?? [];
 }
 
+// Load product-to-modifier price mappings (for specific products that use a specific modifier for price)
+$productModifierPricesFile = __DIR__ . '/product_modifier_prices.json';
+$productModifierPrices = [];
+if (file_exists($productModifierPricesFile)) {
+    $productModifierPrices = json_decode(file_get_contents($productModifierPricesFile), true) ?? [];
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        error_log('Error parsing product_modifier_prices.json: ' . json_last_error_msg());
+        $productModifierPrices = [];
+    }
+}
+
 // Get current page and category from URL
 $categoryId = isset($_GET['category']) ? $_GET['category'] : null;
 $currentPage = $categoryId ? 'products' : 'categories';
@@ -57,7 +68,7 @@ try {
         if ($currentCategory) {
             $products = $api->getProductsByCategory($categoryId);
             
-            // Filter out hidden products and inactive products
+            // Filter out hidden products, inactive products, and deleted products
             $products = array_filter($products, function($product) use ($hiddenProducts) {
                 // Check if product is hidden
                 if (in_array($product['id'], $hiddenProducts)) {
@@ -65,7 +76,15 @@ try {
                 }
                 // Check if product is active (is_active must be true)
                 $isActive = $product['is_active'] ?? true; // Default to true if not set
-                return $isActive === true;
+                if ($isActive !== true) {
+                    return false;
+                }
+                // Check if product is deleted (deleted_at must be null)
+                $deletedAt = $product['deleted_at'] ?? null;
+                if ($deletedAt !== null) {
+                    return false;
+                }
+                return true;
             });
             $products = array_values($products); // Re-index array
             
@@ -104,10 +123,117 @@ function formatPrice($price) {
  * Get price from product modifiers
  * Returns size prices (single/double) and excludes extra/addon prices
  */
-function getPriceFromModifiers($api, $product) {
+function getPriceFromModifiers($api, $product, $productModifierPrices = []) {
     try {
-        // Get product details to access modifier IDs
-        $productDetails = $api->getProductDetails($product['id']);
+        $productId = $product['id'] ?? null;
+        if (!$productId) {
+            return null;
+        }
+        
+        // Check if this product has a specific modifier mapping
+        $specificMapping = $productModifierPrices[$productId] ?? null;
+        
+        // If product has a specific modifier mapping, use only that modifier
+        if ($specificMapping) {
+            // Handle both old format (string) and new format (object with modifier_id and option_id)
+            if (is_string($specificMapping)) {
+                // Old format: just modifier ID
+                $specificModifierId = $specificMapping;
+                $specificOptionId = null;
+            } else {
+                // New format: object with modifier_id and optionally option_id
+                $specificModifierId = $specificMapping['modifier_id'] ?? null;
+                $specificOptionId = $specificMapping['option_id'] ?? null;
+            }
+            
+            if ($specificModifierId) {
+                try {
+                    $modifierDetails = $api->getModifierDetails($specificModifierId);
+                    if (!$modifierDetails) {
+                        error_log('Modifier ' . $specificModifierId . ' not found or empty for product ' . $productId);
+                        return null;
+                    }
+                    if (empty($modifierDetails['options'])) {
+                        error_log('Modifier ' . $specificModifierId . ' has no options for product ' . $productId);
+                        return null;
+                    }
+                    
+                    // Process modifier options
+                    if (!empty($modifierDetails['options'])) {
+                        // If specific option ID is provided, use only that option's price
+                        if ($specificOptionId) {
+                            foreach ($modifierDetails['options'] as $option) {
+                                $optionId = $option['id'] ?? null;
+                                // Check if this is the option we're looking for
+                                if ($optionId === $specificOptionId) {
+                                    // Check if option is deleted
+                                    if (!empty($option['deleted_at'])) {
+                                        return null;
+                                    }
+                                    
+                                    $optionPrice = isset($option['price']) ? floatval($option['price']) : 0;
+                                    // Return the price (even if 0, since it's the specific option requested)
+                                    return $optionPrice;
+                                }
+                            }
+                            // If specific option not found, return null
+                            return null;
+                        }
+                        
+                        // Otherwise, process all options from the modifier
+                        $singlePrice = null;
+                        $doublePrice = null;
+                        $allPrices = [];
+                        
+                        foreach ($modifierDetails['options'] as $option) {
+                            if (!empty($option['deleted_at'])) {
+                                continue;
+                            }
+                            
+                            $optionName = strtolower($option['name'] ?? '');
+                            $optionPrice = isset($option['price']) ? floatval($option['price']) : 0;
+                            
+                            if ($optionPrice > 0) {
+                                $allPrices[] = $optionPrice;
+                                
+                                // Check if this is a single or double size
+                                if (strpos($optionName, 'single') !== false || strpos($optionName, 'small') !== false || strpos($optionName, 'regular') !== false) {
+                                    if ($singlePrice === null || $optionPrice < $singlePrice) {
+                                        $singlePrice = $optionPrice;
+                                    }
+                                } elseif (strpos($optionName, 'double') !== false || strpos($optionName, 'large') !== false || strpos($optionName, 'big') !== false) {
+                                    if ($doublePrice === null || $optionPrice > $doublePrice) {
+                                        $doublePrice = $optionPrice;
+                                    }
+                                }
+                            }
+                        }
+                        
+                        // Return prices based on what we found
+                        if ($singlePrice !== null && $doublePrice !== null) {
+                            return ['single' => $singlePrice, 'double' => $doublePrice];
+                        } elseif ($singlePrice !== null) {
+                            return $singlePrice;
+                        } elseif ($doublePrice !== null) {
+                            return $doublePrice;
+                        } elseif (!empty($allPrices)) {
+                            $minPrice = min($allPrices);
+                            $maxPrice = max($allPrices);
+                            if ($minPrice == $maxPrice) {
+                                return $minPrice;
+                            } else {
+                                return ['min' => $minPrice, 'max' => $maxPrice];
+                            }
+                        }
+                    }
+                } catch (Exception $e) {
+                    error_log('Error fetching specific modifier ' . $specificModifierId . ' for product ' . $productId . ': ' . $e->getMessage());
+                }
+            }
+        }
+        
+        // Default behavior: Get product details to access modifier IDs
+        $productDetails = $api->getProductDetails($productId);
         if (!$productDetails) {
             return null;
         }
@@ -312,36 +438,39 @@ function getPlaceholderImage($text) {
                             // Check if product has modifiers in initial data
                             $hasModifiers = !empty($product['modifiers']) && count($product['modifiers']) > 0;
                             
-                            // If product is free (price = 0), always check for modifiers
-                            // Products with price 0 might have prices in modifier options
+                            // Check if product has a specific modifier price mapping
+                            $hasSpecificModifier = isset($productModifierPrices[$product['id']]);
+                            
+                            // Only use modifier prices if:
+                            // 1. Product price is 0 (free), OR
+                            // 2. Product has a specific modifier mapping in product_modifier_prices.json
+                            // Otherwise, use the product's base price
                             $displayPrice = null;
-                            if ($productPrice == 0) {
-                                $modifierPrice = getPriceFromModifiers($api, $product);
+                            if ($productPrice == 0 || $hasSpecificModifier) {
+                                // Product is free or has specific modifier mapping - check modifiers
+                                $modifierPrice = getPriceFromModifiers($api, $product, $productModifierPrices);
                                 if ($modifierPrice !== null) {
                                     if (is_array($modifierPrice)) {
                                         // Check if it's single/double prices
                                         if (isset($modifierPrice['single']) && isset($modifierPrice['double'])) {
                                             $displayPrice = formatPrice($modifierPrice['single']) . ' <span style="font-size: 0.85em; color: #666;">(Single)</span> / ' . formatPrice($modifierPrice['double']) . ' <span style="font-size: 0.85em; color: #666;">(Double)</span>';
-                                        } else {
+                                        } elseif (isset($modifierPrice['min']) && isset($modifierPrice['max'])) {
                                             // Price range
                                             $displayPrice = formatPrice($modifierPrice['min']) . ' - ' . formatPrice($modifierPrice['max']);
+                                        } else {
+                                            // Fallback for other array formats
+                                            $displayPrice = formatPrice($modifierPrice['min'] ?? $modifierPrice['single'] ?? 0);
                                         }
                                     } else {
+                                        // Single price value
                                         $displayPrice = formatPrice($modifierPrice);
                                     }
                                     // Update hasModifiers flag if we found modifier prices
                                     $hasModifiers = true;
                                 }
-                            } else {
-                                // Product has base price, check for size options (single/double)
-                                $modifierPrice = getPriceFromModifiers($api, $product);
-                                if ($modifierPrice !== null && is_array($modifierPrice) && isset($modifierPrice['single']) && isset($modifierPrice['double'])) {
-                                    // Show both single and double prices with labels
-                                    $displayPrice = formatPrice($modifierPrice['single']) . ' <span style="font-size: 0.85em; color: #666;">(Single)</span> / ' . formatPrice($modifierPrice['double']) . ' <span style="font-size: 0.85em; color: #666;">(Double)</span>';
-                                }
                             }
                             
-                            // If no modifier price found, use product price
+                            // If no modifier price found (or product has base price), use product price
                             if ($displayPrice === null) {
                                 $displayPrice = formatPrice($productPrice);
                             }

@@ -19,6 +19,11 @@
     Deny from all
 </Files>
 
+<Files "product_modifier_prices.json">
+    Order Allow,Deny
+    Deny from all
+</Files>
+
 <Files "README.md">
     Order Allow,Deny
     Deny from all
