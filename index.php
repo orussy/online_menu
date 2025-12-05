@@ -151,7 +151,8 @@ function getPriceFromModifiers($api, $product) {
         // Products that need custom labels based on option names
         $customLabelProducts = [
             '994ed07c-fd1e-4862-8b6d-53e13404a819', // Mozzarella Stick - 2 PCs / 6 PCS
-            '994ed5de-93e2-405c-af7c-302e18820757', // Onion Rings - 2PCS / 6PCS
+            '994ed5de-93e2-405c-af7c-302e18820757',
+            '994ed07d-07c8-4bb8-929a-df2b8ca86faa' // Onion Rings - 2PCS / 6PCS
         ];
         
         // Products that should show single price if all options have same price
