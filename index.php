@@ -102,7 +102,7 @@ function formatPrice($price) {
 
 /**
  * Get price from product modifiers
- * Returns the minimum price from modifier options, or null if no prices found
+ * Returns size prices (single/double) and excludes extra/addon prices
  */
 function getPriceFromModifiers($api, $product) {
     try {
@@ -118,13 +118,32 @@ function getPriceFromModifiers($api, $product) {
             return null;
         }
         
-        $minPrice = null;
-        $maxPrice = null;
+        $singlePrice = null;
+        $doublePrice = null;
+        $sizePrices = [];
         
-        // Check each modifier for prices
+        // Check each modifier for size-related prices
         foreach ($modifiers as $modifier) {
             $modifierId = $modifier['id'] ?? null;
             if (!$modifierId) {
+                continue;
+            }
+            
+            $modifierName = strtolower($modifier['name'] ?? '');
+            
+            // Skip modifiers that are extras/addons/sauces (not sizes)
+            // Look for size-related keywords in modifier name
+            $isSizeModifier = false;
+            $sizeKeywords = ['size', 'single', 'double', 'small', 'large', 'medium', 'regular', 'big'];
+            foreach ($sizeKeywords as $keyword) {
+                if (strpos($modifierName, $keyword) !== false) {
+                    $isSizeModifier = true;
+                    break;
+                }
+            }
+            
+            // If not a size modifier, skip it (this excludes sauces, extras, etc.)
+            if (!$isSizeModifier) {
                 continue;
             }
             
@@ -140,13 +159,22 @@ function getPriceFromModifiers($api, $product) {
                         continue;
                     }
                     
+                    $optionName = strtolower($option['name'] ?? '');
                     $optionPrice = isset($option['price']) ? floatval($option['price']) : 0;
+                    
                     if ($optionPrice > 0) {
-                        if ($minPrice === null || $optionPrice < $minPrice) {
-                            $minPrice = $optionPrice;
-                        }
-                        if ($maxPrice === null || $optionPrice > $maxPrice) {
-                            $maxPrice = $optionPrice;
+                        // Check if this is a single or double size
+                        if (strpos($optionName, 'single') !== false || strpos($optionName, 'small') !== false || strpos($optionName, 'regular') !== false) {
+                            if ($singlePrice === null || $optionPrice < $singlePrice) {
+                                $singlePrice = $optionPrice;
+                            }
+                        } elseif (strpos($optionName, 'double') !== false || strpos($optionName, 'large') !== false || strpos($optionName, 'big') !== false) {
+                            if ($doublePrice === null || $optionPrice > $doublePrice) {
+                                $doublePrice = $optionPrice;
+                            }
+                        } else {
+                            // If we can't determine single/double, collect all size prices
+                            $sizePrices[] = $optionPrice;
                         }
                     }
                 }
@@ -157,8 +185,20 @@ function getPriceFromModifiers($api, $product) {
             }
         }
         
-        // Return price range or single price
-        if ($minPrice !== null) {
+        // Return size prices
+        if ($singlePrice !== null && $doublePrice !== null) {
+            // Both single and double prices found
+            return ['single' => $singlePrice, 'double' => $doublePrice];
+        } elseif ($singlePrice !== null) {
+            // Only single price found
+            return $singlePrice;
+        } elseif ($doublePrice !== null) {
+            // Only double price found
+            return $doublePrice;
+        } elseif (!empty($sizePrices)) {
+            // Size prices found but couldn't determine single/double
+            $minPrice = min($sizePrices);
+            $maxPrice = max($sizePrices);
             if ($minPrice == $maxPrice) {
                 return $minPrice;
             } else {
@@ -279,12 +319,25 @@ function getPlaceholderImage($text) {
                                 $modifierPrice = getPriceFromModifiers($api, $product);
                                 if ($modifierPrice !== null) {
                                     if (is_array($modifierPrice)) {
-                                        $displayPrice = formatPrice($modifierPrice['min']) . ' - ' . formatPrice($modifierPrice['max']);
+                                        // Check if it's single/double prices
+                                        if (isset($modifierPrice['single']) && isset($modifierPrice['double'])) {
+                                            $displayPrice = formatPrice($modifierPrice['single']) . ' <span style="font-size: 0.85em; color: #666;">(Single)</span> / ' . formatPrice($modifierPrice['double']) . ' <span style="font-size: 0.85em; color: #666;">(Double)</span>';
+                                        } else {
+                                            // Price range
+                                            $displayPrice = formatPrice($modifierPrice['min']) . ' - ' . formatPrice($modifierPrice['max']);
+                                        }
                                     } else {
                                         $displayPrice = formatPrice($modifierPrice);
                                     }
                                     // Update hasModifiers flag if we found modifier prices
                                     $hasModifiers = true;
+                                }
+                            } else {
+                                // Product has base price, check for size options (single/double)
+                                $modifierPrice = getPriceFromModifiers($api, $product);
+                                if ($modifierPrice !== null && is_array($modifierPrice) && isset($modifierPrice['single']) && isset($modifierPrice['double'])) {
+                                    // Show both single and double prices with labels
+                                    $displayPrice = formatPrice($modifierPrice['single']) . ' <span style="font-size: 0.85em; color: #666;">(Single)</span> / ' . formatPrice($modifierPrice['double']) . ' <span style="font-size: 0.85em; color: #666;">(Double)</span>';
                                 }
                             }
                             
@@ -314,7 +367,7 @@ function getPlaceholderImage($text) {
                                         <p class="card-description"><?php echo h($displayDescription); ?></p>
                                     <?php endif; ?>
                                     <?php if ($displayPrice): ?>
-                                        <p class="card-price"><?php echo h($displayPrice); ?></p>
+                                        <p class="card-price"><?php echo $displayPrice; ?></p>
                                     <?php endif; ?>
                                 </div>
                             </div>
