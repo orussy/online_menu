@@ -26,16 +26,7 @@ if (file_exists($hiddenCategoriesFile)) {
     $hiddenCategories = json_decode(file_get_contents($hiddenCategoriesFile), true) ?? [];
 }
 
-// Load product-to-modifier price mappings (for specific products that use a specific modifier for price)
-$productModifierPricesFile = __DIR__ . '/product_modifier_prices.json';
-$productModifierPrices = [];
-if (file_exists($productModifierPricesFile)) {
-    $productModifierPrices = json_decode(file_get_contents($productModifierPricesFile), true) ?? [];
-    if (json_last_error() !== JSON_ERROR_NONE) {
-        error_log('Error parsing product_modifier_prices.json: ' . json_last_error_msg());
-        $productModifierPrices = [];
-    }
-}
+// Modifier prices are now read directly from product API response
 
 // Get current page and category from URL
 $categoryId = isset($_GET['category']) ? $_GET['category'] : null;
@@ -122,141 +113,39 @@ function formatPrice($price) {
 /**
  * Get price from product modifiers
  * Returns size prices (single/double) and excludes extra/addon prices
+ * Reads modifiers directly from product data (from API response)
  */
-function getPriceFromModifiers($api, $product, $productModifierPrices = []) {
+function getPriceFromModifiers($api, $product) {
     try {
         $productId = $product['id'] ?? null;
         if (!$productId) {
             return null;
         }
         
-        // Check if this product has a specific modifier mapping
-        $specificMapping = $productModifierPrices[$productId] ?? null;
-        
-        // If product has a specific modifier mapping, use only that modifier
-        if ($specificMapping) {
-            // Handle both old format (string) and new format (object with modifier_id and option_id)
-            if (is_string($specificMapping)) {
-                // Old format: just modifier ID
-                $specificModifierId = $specificMapping;
-                $specificOptionId = null;
-            } else {
-                // New format: object with modifier_id and optionally option_id
-                $specificModifierId = $specificMapping['modifier_id'] ?? null;
-                $specificOptionId = $specificMapping['option_id'] ?? null;
-            }
-            
-            if ($specificModifierId) {
-                try {
-                    $modifierDetails = $api->getModifierDetails($specificModifierId);
-                    if (!$modifierDetails) {
-                        error_log('Modifier ' . $specificModifierId . ' not found or empty for product ' . $productId);
-                        return null;
-                    }
-                    if (empty($modifierDetails['options'])) {
-                        error_log('Modifier ' . $specificModifierId . ' has no options for product ' . $productId);
-                        return null;
-                    }
-                    
-                    // Process modifier options
-                    if (!empty($modifierDetails['options'])) {
-                        // If specific option ID is provided, use only that option's price
-                        if ($specificOptionId) {
-                            foreach ($modifierDetails['options'] as $option) {
-                                $optionId = $option['id'] ?? null;
-                                // Check if this is the option we're looking for
-                                if ($optionId === $specificOptionId) {
-                                    // Check if option is deleted
-                                    if (!empty($option['deleted_at'])) {
-                                        return null;
-                                    }
-                                    
-                                    $optionPrice = isset($option['price']) ? floatval($option['price']) : 0;
-                                    // Return the price (even if 0, since it's the specific option requested)
-                                    return $optionPrice;
-                                }
-                            }
-                            // If specific option not found, return null
-                            return null;
-                        }
-                        
-                        // Otherwise, process all options from the modifier
-                        $singlePrice = null;
-                        $doublePrice = null;
-                        $allPrices = [];
-                        
-                        foreach ($modifierDetails['options'] as $option) {
-                            if (!empty($option['deleted_at'])) {
-                                continue;
-                            }
-                            
-                            $optionName = strtolower($option['name'] ?? '');
-                            $optionPrice = isset($option['price']) ? floatval($option['price']) : 0;
-                            
-                            if ($optionPrice > 0) {
-                                $allPrices[] = $optionPrice;
-                                
-                                // Check if this is a single or double size
-                                // Look for keywords first
-                                if (strpos($optionName, 'single') !== false || strpos($optionName, 'small') !== false || strpos($optionName, 'regular') !== false) {
-                                    if ($singlePrice === null || $optionPrice < $singlePrice) {
-                                        $singlePrice = $optionPrice;
-                                    }
-                                } elseif (strpos($optionName, 'double') !== false || strpos($optionName, 'large') !== false || strpos($optionName, 'big') !== false) {
-                                    if ($doublePrice === null || $optionPrice > $doublePrice) {
-                                        $doublePrice = $optionPrice;
-                                    }
-                                }
-                            }
-                        }
-                        
-                        // If we have exactly 2 prices and haven't identified single/double yet, treat as single/double
-                        if (count($allPrices) == 2 && ($singlePrice === null || $doublePrice === null)) {
-                            sort($allPrices);
-                            $singlePrice = $allPrices[0];
-                            $doublePrice = $allPrices[1];
-                        }
-                        
-                        // Return prices based on what we found
-                        if ($singlePrice !== null && $doublePrice !== null) {
-                            return ['single' => $singlePrice, 'double' => $doublePrice];
-                        } elseif ($singlePrice !== null) {
-                            return $singlePrice;
-                        } elseif ($doublePrice !== null) {
-                            return $doublePrice;
-                        } elseif (!empty($allPrices)) {
-                            $minPrice = min($allPrices);
-                            $maxPrice = max($allPrices);
-                            if ($minPrice == $maxPrice) {
-                                return $minPrice;
-                            } else {
-                                return ['min' => $minPrice, 'max' => $maxPrice];
-                            }
-                        }
-                    }
-                } catch (Exception $e) {
-                    error_log('Error fetching specific modifier ' . $specificModifierId . ' for product ' . $productId . ': ' . $e->getMessage());
+        // Check if modifiers exist in product data (from API response)
+        $modifiers = $product['modifiers'] ?? [];
+        if (empty($modifiers)) {
+            // If not in product data, try to get product details
+            try {
+                $productDetails = $api->getProductDetails($productId);
+                if ($productDetails) {
+                    $modifiers = $productDetails['modifiers'] ?? [];
                 }
+            } catch (Exception $e) {
+                // If we can't get product details, return null
+                return null;
             }
         }
         
-        // Default behavior: Get product details to access modifier IDs
-        $productDetails = $api->getProductDetails($productId);
-        if (!$productDetails) {
-            return null;
-        }
-        
-        // Check if modifiers exist in product details
-        $modifiers = $productDetails['modifiers'] ?? [];
         if (empty($modifiers)) {
             return null;
         }
         
         $singlePrice = null;
         $doublePrice = null;
-        $sizePrices = [];
+        $allPrices = [];
         
-        // Check each modifier for size-related prices
+        // Process all modifiers from product data
         foreach ($modifiers as $modifier) {
             $modifierId = $modifier['id'] ?? null;
             if (!$modifierId) {
@@ -264,75 +153,92 @@ function getPriceFromModifiers($api, $product, $productModifierPrices = []) {
             }
             
             $modifierName = strtolower($modifier['name'] ?? '');
+            $options = $modifier['options'] ?? [];
             
-            // Skip modifiers that are extras/addons/sauces (not sizes)
-            // Look for size-related keywords in modifier name
-            $isSizeModifier = false;
-            $sizeKeywords = ['size', 'single', 'double', 'small', 'large', 'medium', 'regular', 'big'];
-            foreach ($sizeKeywords as $keyword) {
-                if (strpos($modifierName, $keyword) !== false) {
-                    $isSizeModifier = true;
-                    break;
-                }
-            }
-            
-            // If not a size modifier, skip it (this excludes sauces, extras, etc.)
-            if (!$isSizeModifier) {
+            if (empty($options)) {
                 continue;
             }
             
-            try {
-                $modifierDetails = $api->getModifierDetails($modifierId);
-                if (!$modifierDetails || empty($modifierDetails['options'])) {
+            // For products with price 0, process all modifiers (they might be the source of pricing)
+            // For products with price > 0, only process size-related modifiers (exclude sauces/extras)
+            $productPrice = $product['price'] ?? 0;
+            $shouldProcessModifier = true;
+            
+            if ($productPrice > 0) {
+                // Product has a base price, only process size modifiers
+                $isSizeModifier = false;
+                $sizeKeywords = ['size', 'single', 'double', 'small', 'large', 'medium', 'regular', 'big', 'options', 'quantity', 'bun', 'pcs', 'pc', 'taste'];
+                foreach ($sizeKeywords as $keyword) {
+                    if (strpos($modifierName, $keyword) !== false) {
+                        $isSizeModifier = true;
+                        break;
+                    }
+                }
+                
+                // Exclude modifiers that are extras/addons/sauces (not sizes) when product has base price
+                $excludeKeywords = ['sauce', 'extra', 'addon', 'add-on', 'topping'];
+                $isExcluded = false;
+                foreach ($excludeKeywords as $keyword) {
+                    if (strpos($modifierName, $keyword) !== false && !$isSizeModifier) {
+                        $isExcluded = true;
+                        break;
+                    }
+                }
+                
+                if ($isExcluded) {
+                    $shouldProcessModifier = false;
+                }
+            }
+            // If product price is 0, process all modifiers (they are likely the source of pricing)
+            
+            if (!$shouldProcessModifier) {
+                continue;
+            }
+            
+            // Process options from modifier
+            foreach ($options as $option) {
+                // Skip deleted options
+                if (!empty($option['deleted_at'])) {
                     continue;
                 }
                 
-                foreach ($modifierDetails['options'] as $option) {
-                    // Skip deleted options
-                    if (!empty($option['deleted_at'])) {
-                        continue;
-                    }
+                $optionName = strtolower($option['name'] ?? '');
+                $optionPrice = isset($option['price']) ? floatval($option['price']) : 0;
+                
+                if ($optionPrice > 0) {
+                    $allPrices[] = $optionPrice;
                     
-                    $optionName = strtolower($option['name'] ?? '');
-                    $optionPrice = isset($option['price']) ? floatval($option['price']) : 0;
-                    
-                    if ($optionPrice > 0) {
-                        // Check if this is a single or double size
-                        if (strpos($optionName, 'single') !== false || strpos($optionName, 'small') !== false || strpos($optionName, 'regular') !== false) {
-                            if ($singlePrice === null || $optionPrice < $singlePrice) {
-                                $singlePrice = $optionPrice;
-                            }
-                        } elseif (strpos($optionName, 'double') !== false || strpos($optionName, 'large') !== false || strpos($optionName, 'big') !== false) {
-                            if ($doublePrice === null || $optionPrice > $doublePrice) {
-                                $doublePrice = $optionPrice;
-                            }
-                        } else {
-                            // If we can't determine single/double, collect all size prices
-                            $sizePrices[] = $optionPrice;
+                    // Check if this is a single or double size
+                    if (strpos($optionName, 'single') !== false || strpos($optionName, 'small') !== false || strpos($optionName, 'regular') !== false || strpos($optionName, '1 ') !== false || strpos($optionName, '2 ') !== false || strpos($optionName, 'original') !== false || strpos($optionName, 'spicy') !== false || strpos($optionName, 'ranch') !== false || strpos($optionName, 'buffalo') !== false) {
+                        if ($singlePrice === null || $optionPrice < ($singlePrice ?: 999999)) {
+                            $singlePrice = $optionPrice;
+                        }
+                    } elseif (strpos($optionName, 'double') !== false || strpos($optionName, 'large') !== false || strpos($optionName, 'big') !== false || strpos($optionName, '3 ') !== false || strpos($optionName, '6 ') !== false) {
+                        if ($doublePrice === null || $optionPrice > ($doublePrice ?: 0)) {
+                            $doublePrice = $optionPrice;
                         }
                     }
                 }
-            } catch (Exception $e) {
-                // Continue to next modifier if this one fails
-                error_log('Error fetching modifier ' . $modifierId . ': ' . $e->getMessage());
-                continue;
             }
         }
         
-        // Return size prices
+        // If we have exactly 2 prices and haven't identified single/double yet, treat as single/double
+        if (count($allPrices) == 2 && ($singlePrice === null || $doublePrice === null)) {
+            sort($allPrices);
+            $singlePrice = $allPrices[0];
+            $doublePrice = $allPrices[1];
+        }
+        
+        // Return prices based on what we found
         if ($singlePrice !== null && $doublePrice !== null) {
-            // Both single and double prices found
             return ['single' => $singlePrice, 'double' => $doublePrice];
         } elseif ($singlePrice !== null) {
-            // Only single price found
             return $singlePrice;
         } elseif ($doublePrice !== null) {
-            // Only double price found
             return $doublePrice;
-        } elseif (!empty($sizePrices)) {
-            // Size prices found but couldn't determine single/double
-            $minPrice = min($sizePrices);
-            $maxPrice = max($sizePrices);
+        } elseif (!empty($allPrices)) {
+            $minPrice = min($allPrices);
+            $maxPrice = max($allPrices);
             if ($minPrice == $maxPrice) {
                 return $minPrice;
             } else {
@@ -446,17 +352,17 @@ function getPlaceholderImage($text) {
                             // Check if product has modifiers in initial data
                             $hasModifiers = !empty($product['modifiers']) && count($product['modifiers']) > 0;
                             
-                            // Check if product has a specific modifier price mapping
-                            $hasSpecificModifier = isset($productModifierPrices[$product['id']]);
+                            // Check if product has modifiers (from API response)
+                            $hasModifiersInData = !empty($product['modifiers']) && count($product['modifiers']) > 0;
                             
                             // Only use modifier prices if:
                             // 1. Product price is 0 (free), OR
-                            // 2. Product has a specific modifier mapping in product_modifier_prices.json
+                            // 2. Product has modifiers in the API response
                             // Otherwise, use the product's base price
                             $displayPrice = null;
-                            if ($productPrice == 0 || $hasSpecificModifier) {
-                                // Product is free or has specific modifier mapping - check modifiers
-                                $modifierPrice = getPriceFromModifiers($api, $product, $productModifierPrices);
+                            if ($productPrice == 0 || $hasModifiersInData) {
+                                // Product is free or has modifiers - check modifiers from product data
+                                $modifierPrice = getPriceFromModifiers($api, $product);
                                 if ($modifierPrice !== null) {
                                     if (is_array($modifierPrice)) {
                                         // Check if it's single/double prices
