@@ -1,0 +1,396 @@
+{
+    "data": [
+        {
+            "id": "994ec5d4-0aca-42e8-bc34-eb3c4ba94b93",
+            "name": "Chicken Sandwich",
+            "name_localized": null,
+            "reference": "chickensandwich",
+            "image": "https:\/\/foodics-console-production.s3.eu-west-1.amazonaws.com\/images\/448295_1713223550_9bd1181d-f9fa-4223-a43f-0381bbfb74fa.jpg",
+            "created_at": "2023-06-01 16:14:15",
+            "updated_at": "2024-04-15 23:25:54",
+            "deleted_at": null
+        },
+        {
+            "id": "994ec5d4-21f4-47c6-80ac-672177c0f1e7",
+            "name": "Chicken Burger Sandwitch",
+            "name_localized": null,
+            "reference": "chickenbursandwitch",
+            "image": "https:\/\/foodics-console-production.s3.eu-west-1.amazonaws.com\/images\/448295_1708905915_9b6c9101-6abe-4a12-9f63-56fbd1547a58.jpeg",
+            "created_at": "2023-06-01 16:14:15",
+            "updated_at": "2024-02-26 00:05:17",
+            "deleted_at": null
+        },
+        {
+            "id": "994ec5d4-234c-4e84-b423-857f900ea24c",
+            "name": "Chicken Meal",
+            "name_localized": "وجبات الدجاج",
+            "reference": "chicken-meal",
+            "image": "https:\/\/foodics-console-production.s3.eu-west-1.amazonaws.com\/images\/448295_1713223398_9bd11735-8c20-4a0e-93ba-e3b81a5cc46a.jpg",
+            "created_at": "2023-06-01 16:14:15",
+            "updated_at": "2024-04-15 23:23:22",
+            "deleted_at": null
+        },
+        {
+            "id": "994ec5d4-257d-470a-bb69-6f78350d1f09",
+            "name": "Strips Meal",
+            "name_localized": null,
+            "reference": "strips-meals",
+            "image": "https:\/\/foodics-console-production.s3.eu-west-1.amazonaws.com\/images\/448295_1708906012_9b6c9194-b93c-4326-bf05-67df314d077f.png",
+            "created_at": "2023-06-01 16:14:15",
+            "updated_at": "2024-02-26 00:06:54",
+            "deleted_at": null
+        },
+        {
+            "id": "994ec5d4-2981-4251-bcbb-86cdb7f29cb5",
+            "name": "Strips Sandwich",
+            "name_localized": null,
+            "reference": "strips-sandwich",
+            "image": "https:\/\/foodics-console-production.s3.eu-west-1.amazonaws.com\/images\/448295_1708906031_9b6c91b2-be22-4335-9fc7-0da215d1ee10.png",
+            "created_at": "2023-06-01 16:14:15",
+            "updated_at": "2024-02-26 00:07:16",
+            "deleted_at": null
+        },
+        {
+            "id": "994ec5d4-2a88-4c3c-99f9-88e365877217",
+            "name": "Twin Meals",
+            "name_localized": null,
+            "reference": "twin-meals",
+            "image": "https:\/\/foodics-console-production.s3.eu-west-1.amazonaws.com\/images\/448295_1708906075_9b6c91f5-3462-437a-88a9-36fa88d8ca86.png",
+            "created_at": "2023-06-01 16:14:15",
+            "updated_at": "2024-02-26 00:07:58",
+            "deleted_at": null
+        },
+        {
+            "id": "994ec5d4-2be3-4b84-b4fb-19e1ae1c836d",
+            "name": "Kids Meal",
+            "name_localized": null,
+            "reference": "kids-meal",
+            "image": "https:\/\/foodics-console-production.s3.eu-west-1.amazonaws.com\/images\/448295_1708905765_9b6c901c-85d3-4174-84da-cf0c911ecc11.png",
+            "created_at": "2023-06-01 16:14:15",
+            "updated_at": "2024-02-26 00:02:48",
+            "deleted_at": null
+        },
+        {
+            "id": "994ec5d4-2cc6-4ed6-8375-b8384f49ed17",
+            "name": "Beef Sandwich",
+            "name_localized": null,
+            "reference": "beef-sandwich",
+            "image": "https:\/\/foodics-console-production.s3.eu-west-1.amazonaws.com\/images\/448295_1708904914_9b6c8b09-9306-4662-a817-33be4b1c166e.jpeg",
+            "created_at": "2023-06-01 16:14:15",
+            "updated_at": "2024-02-25 23:48:37",
+            "deleted_at": null
+        },
+        {
+            "id": "994ec5d4-3151-42a5-a8f4-7ab0b14f041d",
+            "name": "Rice",
+            "name_localized": null,
+            "reference": "rice",
+            "image": "https:\/\/foodics-console-production.s3.eu-west-1.amazonaws.com\/images\/448295_1708905875_9b6c90c3-e501-46e8-8645-2cb141d3141b.png",
+            "created_at": "2023-06-01 16:14:15",
+            "updated_at": "2024-02-26 00:04:38",
+            "deleted_at": null
+        },
+        {
+            "id": "994ec5d5-0ead-457f-acfb-e1ab69edbba1",
+            "name": "Appetizer",
+            "name_localized": null,
+            "reference": "appetizer",
+            "image": "https:\/\/foodics-console-production.s3.eu-west-1.amazonaws.com\/images\/448295_1708905585_9b6c8f09-1122-48ca-b6e6-ac9ff4575ae0.png",
+            "created_at": "2023-06-01 16:14:15",
+            "updated_at": "2024-02-25 23:59:50",
+            "deleted_at": null
+        },
+        {
+            "id": "994ec5d5-1101-4fd7-a7f4-80f078fc9377",
+            "name": "Add On",
+            "name_localized": null,
+            "reference": "add-on",
+            "image": "https:\/\/foodics-console-production.s3.eu-west-1.amazonaws.com\/images\/448295_1708905550_9b6c8ed4-d775-416a-843f-1231bebff22c.png",
+            "created_at": "2023-06-01 16:14:15",
+            "updated_at": "2024-02-25 23:59:14",
+            "deleted_at": null
+        },
+        {
+            "id": "994ec5d5-125c-4015-bd3f-a672eef36fec",
+            "name": "Hunger Drink",
+            "name_localized": null,
+            "reference": "hdrink",
+            "image": "https:\/\/foodics-console-production.s3.eu-west-1.amazonaws.com\/images\/448295_1708906436_9b6c941c-5ac4-462a-b02b-517679961de8.jpeg",
+            "created_at": "2023-06-01 16:14:15",
+            "updated_at": "2025-04-08 14:02:06",
+            "deleted_at": null
+        },
+        {
+            "id": "994ec5d5-15b8-4b4e-b750-e1331ac19e79",
+            "name": "Event Dessert",
+            "name_localized": null,
+            "reference": "event-dessert",
+            "image": "https:\/\/foodics-console-production.s3.eu-west-1.amazonaws.com\/images\/448295_1708905177_9b6c8c9b-75e8-4a8e-ac90-c6eb8cbba749.jpeg",
+            "created_at": "2023-06-01 16:14:15",
+            "updated_at": "2025-06-11 07:26:28",
+            "deleted_at": null
+        },
+        {
+            "id": "994ec5d5-175c-46c4-b2e1-8454ccd94589",
+            "name": "Hunger Offers",
+            "name_localized": null,
+            "reference": "hungeroffers",
+            "image": "https:\/\/foodics-console-production.s3.eu-west-1.amazonaws.com\/images\/448295_1708904366_9b6c87c6-380e-4e1c-8abd-09668460e922.png",
+            "created_at": "2023-06-01 16:14:15",
+            "updated_at": "2024-02-25 23:39:29",
+            "deleted_at": null
+        },
+        {
+            "id": "994ec5d5-186e-480e-ba1a-319331d5ee2c",
+            "name": "Talabat Offers",
+            "name_localized": null,
+            "reference": "talabatoffers",
+            "image": "https:\/\/foodics-console-production.s3.eu-west-1.amazonaws.com\/images\/448295_1708904448_9b6c8842-f0c1-429d-bcce-ffb79cb556ae.png",
+            "created_at": "2023-06-01 16:14:15",
+            "updated_at": "2024-02-25 23:40:54",
+            "deleted_at": null
+        },
+        {
+            "id": "994ec5d5-194d-4164-89b6-44918a31d2bc",
+            "name": "Waffarha Offers",
+            "name_localized": null,
+            "reference": "waffarha",
+            "image": "https:\/\/foodics-console-production.s3.eu-west-1.amazonaws.com\/images\/448295_1708904347_9b6c87a9-3a51-477d-8ca0-4034ce24cb7a.png",
+            "created_at": "2023-06-01 16:14:15",
+            "updated_at": "2024-02-25 23:39:10",
+            "deleted_at": null
+        },
+        {
+            "id": "994ec5d5-1a36-4c70-b427-7da372b8953f",
+            "name": "Elmenu Offers",
+            "name_localized": null,
+            "reference": "elmenuoffers",
+            "image": "https:\/\/foodics-console-production.s3.eu-west-1.amazonaws.com\/images\/448295_1708904238_9b6c8701-a922-4e7b-a391-06f96d80535b.jpeg",
+            "created_at": "2023-06-01 16:14:15",
+            "updated_at": "2024-02-25 23:37:21",
+            "deleted_at": null
+        },
+        {
+            "id": "994ec5d5-1bdd-49d3-a4a8-7d9ea271ab5c",
+            "name": "MRSOOL Offers",
+            "name_localized": null,
+            "reference": "marsooloffers",
+            "image": "https:\/\/foodics-console-production.s3.eu-west-1.amazonaws.com\/images\/448295_1708904682_9b6c89a7-61f6-42b1-a9a8-ec5e27e3bb89.jpeg",
+            "created_at": "2023-06-01 16:14:15",
+            "updated_at": "2024-07-21 20:00:45",
+            "deleted_at": null
+        },
+        {
+            "id": "994ec5d5-1cc5-4574-9eff-d25d83d261c8",
+            "name": "Jummia Offers",
+            "name_localized": null,
+            "reference": "jummiaoffers",
+            "image": "https:\/\/foodics-console-production.s3.eu-west-1.amazonaws.com\/images\/448295_1708905006_9b6c8b96-3f66-45a4-a976-59aab171a9d2.png",
+            "created_at": "2023-06-01 16:14:15",
+            "updated_at": "2024-02-25 23:50:09",
+            "deleted_at": null
+        },
+        {
+            "id": "994ec5d5-1d94-471e-bea0-4ea44efd208b",
+            "name": "Staff Meal",
+            "name_localized": null,
+            "reference": "staffmeal",
+            "image": "https:\/\/foodics-console-production.s3.eu-west-1.amazonaws.com\/images\/448295_1708904709_9b6c89d1-96c1-42dd-be1f-98307a152017.png",
+            "created_at": "2023-06-01 16:14:15",
+            "updated_at": "2024-02-25 23:45:15",
+            "deleted_at": null
+        },
+        {
+            "id": "995494e6-d2c7-49cf-af12-9b012bd32a02",
+            "name": "Drum Meal",
+            "name_localized": null,
+            "reference": "drum-meal",
+            "image": "https:\/\/foodics-console-production.s3.eu-west-1.amazonaws.com\/images\/448295_1708905899_9b6c90e8-ede9-4a00-b31a-25864835494d.jpeg",
+            "created_at": "2023-06-04 13:32:24",
+            "updated_at": "2024-02-26 00:05:02",
+            "deleted_at": null
+        },
+        {
+            "id": "9982f64b-f4cb-4aeb-ab04-69a4224654fd",
+            "name": "Fresh Juice",
+            "name_localized": null,
+            "reference": "fresh-juice",
+            "image": null,
+            "created_at": "2023-06-27 14:52:49",
+            "updated_at": "2023-06-27 14:52:49",
+            "deleted_at": null
+        },
+        {
+            "id": "998ce2e0-a2cc-4e5b-9e1a-0b0fd3e78765",
+            "name": "NC Summer Offers",
+            "name_localized": null,
+            "reference": "nc-summer-offers",
+            "image": null,
+            "created_at": "2023-07-02 13:16:48",
+            "updated_at": "2023-07-02 13:16:48",
+            "deleted_at": null
+        },
+        {
+            "id": "9c007b36-4ee4-4224-81ed-65645ecc2a19",
+            "name": "Event Drink",
+            "name_localized": null,
+            "reference": "event-drink",
+            "image": "https:\/\/foodics-console-production.s3.eu-west-1.amazonaws.com\/images\/448295_1715261400_9c008aa5-ecb6-43ce-a61d-c2cf909e8c6b.jpeg",
+            "created_at": "2024-05-09 12:46:50",
+            "updated_at": "2024-05-09 13:30:04",
+            "deleted_at": null
+        },
+        {
+            "id": "9d0bae4e-ac63-40c3-b86a-d20ef6f75a22",
+            "name": "BonBell",
+            "name_localized": "bonbell",
+            "reference": "bonbell",
+            "image": null,
+            "created_at": "2024-09-19 08:35:45",
+            "updated_at": "2024-09-19 08:35:45",
+            "deleted_at": null
+        },
+        {
+            "id": "9d4ea175-87d0-41ec-a9e9-ad1de0a18c16",
+            "name": "KFS Sandawitch",
+            "name_localized": "kfsSandawitch",
+            "reference": null,
+            "image": null,
+            "created_at": "2024-10-22 15:20:18",
+            "updated_at": "2024-10-22 15:20:18",
+            "deleted_at": null
+        },
+        {
+            "id": "9d4ea437-1cd7-448d-8c31-7fe44108c98e",
+            "name": "KFS Appetizers",
+            "name_localized": null,
+            "reference": "kfsappetizers",
+            "image": "https:\/\/foodics-console-production.s3.eu-west-1.amazonaws.com\/images\/448295_1729622717_9d4eeac4-9eb1-4de8-a53a-85185565c799.png",
+            "created_at": "2024-10-22 15:28:00",
+            "updated_at": "2024-10-22 18:45:20",
+            "deleted_at": null
+        },
+        {
+            "id": "9d4ecb54-d20a-44b7-b06b-a4c63dc4d12f",
+            "name": "KFS Offers",
+            "name_localized": null,
+            "reference": "kfsoffers",
+            "image": "https:\/\/foodics-console-production.s3.eu-west-1.amazonaws.com\/images\/448295_1729622617_9d4eea2c-7b0a-423f-8523-37b2121931d0.png",
+            "created_at": "2024-10-22 17:17:23",
+            "updated_at": "2024-10-22 18:43:40",
+            "deleted_at": null
+        },
+        {
+            "id": "9d4ee950-22da-411d-ae6e-b95582ef9874",
+            "name": "KFS Wafarha",
+            "name_localized": null,
+            "reference": "kfswafarha",
+            "image": null,
+            "created_at": "2024-10-22 18:41:13",
+            "updated_at": "2024-10-22 18:41:13",
+            "deleted_at": null
+        },
+        {
+            "id": "9d4ef40c-b12e-462f-8721-087a56348341",
+            "name": "KFS Staff Meal",
+            "name_localized": null,
+            "reference": "sffcstaffmeal",
+            "image": null,
+            "created_at": "2024-10-22 19:11:14",
+            "updated_at": "2024-12-31 18:45:05",
+            "deleted_at": null
+        },
+        {
+            "id": "9d571dbe-f1d8-45c8-b929-d93bd3047a76",
+            "name": "Hunger Event Offers",
+            "name_localized": null,
+            "reference": "hungereventoffers",
+            "image": null,
+            "created_at": "2024-10-26 20:34:27",
+            "updated_at": "2024-10-26 20:34:27",
+            "deleted_at": null
+        },
+        {
+            "id": "9d58f766-ce49-4706-ad45-171368b830ef",
+            "name": "KFS Desert",
+            "name_localized": null,
+            "reference": "kfsdesertmenu",
+            "image": null,
+            "created_at": "2024-10-27 18:38:53",
+            "updated_at": "2024-10-27 18:39:40",
+            "deleted_at": null
+        },
+        {
+            "id": "9e078fb5-6b09-4a03-a79b-f59200a3323d",
+            "name": "KFS Event Offers",
+            "name_localized": "kfseventoffers",
+            "reference": null,
+            "image": null,
+            "created_at": "2025-01-22 13:38:49",
+            "updated_at": "2025-01-22 13:38:49",
+            "deleted_at": null
+        },
+        {
+            "id": "9e41814e-ad68-4db9-bc52-f24d03ef4da1",
+            "name": "Hunger Ramadan Offers",
+            "name_localized": null,
+            "reference": "ramadan-offers",
+            "image": "https:\/\/foodics-console-production.s3.eu-west-1.amazonaws.com\/images\/448295_1740041856_9e4181ad-7089-4cac-8ac3-ceed90efb168.png",
+            "created_at": "2025-02-20 08:56:34",
+            "updated_at": "2025-02-20 09:05:26",
+            "deleted_at": null
+        },
+        {
+            "id": "9ea07b01-3c38-44ec-973c-88bedd66669f",
+            "name": "KFS Drink",
+            "name_localized": null,
+            "reference": "kfsdrink",
+            "image": null,
+            "created_at": "2025-04-08 14:02:36",
+            "updated_at": "2025-04-08 14:02:36",
+            "deleted_at": null
+        },
+        {
+            "id": "9f5b7f99-3494-418e-b879-472bdce8296e",
+            "name": "** New ** Hunfger Sandwitch",
+            "name_localized": null,
+            "reference": "newsandwitches",
+            "image": null,
+            "created_at": "2025-07-10 13:15:15",
+            "updated_at": "2025-07-10 13:15:15",
+            "deleted_at": null
+        },
+        {
+            "id": "9f9e6493-9a8d-4bc8-aa29-f2b28b0d206b",
+            "name": "Hadeer Offers",
+            "name_localized": null,
+            "reference": "hadeeroffers",
+            "image": "https:\/\/foodics-console-production.s3.eu-west-1.amazonaws.com\/images\/448295_1755027414_9f9e6a8f-6d96-4240-9b05-d08869cb029b.jpg",
+            "created_at": "2025-08-12 19:20:10",
+            "updated_at": "2025-08-12 19:36:57",
+            "deleted_at": null
+        },
+        {
+            "id": "a0166873-9b67-4b81-b354-697cdcd792fb",
+            "name": "Fatet Koftah * Shesh",
+            "name_localized": "Fatet Koftah * Shesh",
+            "reference": "fatet-koftah-shesh",
+            "image": null,
+            "created_at": "2025-10-11 11:10:21",
+            "updated_at": "2025-10-11 11:10:21",
+            "deleted_at": null
+        },
+        {
+            "id": "a0166afe-dde7-4ac5-bac8-5de38bc93838",
+            "name": "KFS Family Meal",
+            "name_localized": null,
+            "reference": "kfs-family-meal",
+            "image": null,
+            "created_at": "2025-10-11 11:17:28",
+            "updated_at": "2025-10-11 11:17:28",
+            "deleted_at": null
+        }
+    ],
+    "cached_at": 1764973270,
+    "cached_at_readable": "2025-12-05 23:21:10"
+}

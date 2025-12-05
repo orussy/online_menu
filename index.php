@@ -30,6 +30,7 @@ if (file_exists($hiddenCategoriesFile)) {
 
 // Get current page and category from URL
 $categoryId = isset($_GET['category']) ? $_GET['category'] : null;
+$forceSync = isset($_GET['sync']) && $_GET['sync'] === '1'; // Manual sync trigger
 $currentPage = $categoryId ? 'products' : 'categories';
 
 // Initialize variables
@@ -40,8 +41,8 @@ $error = null;
 
 try {
     if ($currentPage === 'categories') {
-        // Load categories
-        $categories = $api->getCategories();
+        // Load categories (from cache if available, or API if cache expired)
+        $categories = $api->getCategories($forceSync);
         
         // Filter out hidden categories
         $categories = array_filter($categories, function($cat) use ($hiddenCategories) {
@@ -50,14 +51,14 @@ try {
         $categories = array_values($categories); // Re-index array
     } else {
         // Load category details and products
-        $categories = $api->getCategories();
+        $categories = $api->getCategories($forceSync);
         $currentCategory = array_filter($categories, function($cat) use ($categoryId) {
             return $cat['id'] === $categoryId;
         });
         $currentCategory = !empty($currentCategory) ? reset($currentCategory) : null;
         
         if ($currentCategory) {
-            $products = $api->getProductsByCategory($categoryId);
+            $products = $api->getProductsByCategory($categoryId, $forceSync);
             
             // Filter out hidden products, inactive products, and deleted products
             $products = array_filter($products, function($product) use ($hiddenProducts) {
@@ -125,7 +126,7 @@ function getPriceFromModifiers($api, $product) {
         // Check if modifiers exist in product data (from API response)
         $modifiers = $product['modifiers'] ?? [];
         if (empty($modifiers)) {
-            // If not in product data, try to get product details
+            // If not in product data, try to get product details from cache/API
             try {
                 $productDetails = $api->getProductDetails($productId);
                 if ($productDetails) {
@@ -283,7 +284,9 @@ function getPlaceholderImage($text) {
                     <?php if ($currentPage === 'products'): ?>
                         <a href="index.php" class="back-btn">← Back to Categories</a>
                     <?php endif; ?>
-                    
+                    <?php if (isset($_GET['sync']) && $_GET['sync'] === '1'): ?>
+                        <span style="color: green; font-size: 0.9em;">✓ Data synced</span>
+                    <?php endif; ?>
                 </div>
             </div>
         </nav>

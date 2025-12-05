@@ -1,0 +1,68 @@
+{
+    "data": [
+        {
+            "id": "994ed07b-e80b-4366-b4e6-159a3bc1a381",
+            "sku": "sk-0108",
+            "barcode": null,
+            "name": "Catching fire",
+            "name_localized": null,
+            "description": null,
+            "description_localized": null,
+            "image": "https:\/\/foodics-console-production.s3.eu-west-1.amazonaws.com\/images\/448295_1687801674_998131ed-819f-406b-94ce-468d7b9ab83c.jpg",
+            "is_active": true,
+            "is_stock_product": false,
+            "is_non_revenue": false,
+            "is_ready": true,
+            "pricing_method": 1,
+            "selling_method": 1,
+            "costing_method": 2,
+            "preparation_time": null,
+            "price": 0,
+            "cost": null,
+            "calories": null,
+            "walking_minutes_to_burn_calories": null,
+            "is_high_salt": false,
+            "created_at": "2023-06-01 16:44:02",
+            "updated_at": "2025-01-01 12:44:49",
+            "deleted_at": null,
+            "meta": {
+                "eg_ereceipt_item_code": "EG-579872092-0108",
+                "eg_ereceipt_item_type": "EGS",
+                "eg_ereceipt_unit_type": "EA"
+            }
+        },
+        {
+            "id": "9956589a-8b9d-4418-979d-448cfa54ac36",
+            "sku": "sk-0252",
+            "barcode": null,
+            "name": "Flavious",
+            "name_localized": null,
+            "description": null,
+            "description_localized": null,
+            "image": "https:\/\/foodics-console-production.s3.eu-west-1.amazonaws.com\/images\/448295_1687801645_998131c1-665c-446b-89f4-9bbb021077e4.jpg",
+            "is_active": true,
+            "is_stock_product": false,
+            "is_non_revenue": false,
+            "is_ready": true,
+            "pricing_method": 1,
+            "selling_method": 1,
+            "costing_method": 2,
+            "preparation_time": null,
+            "price": 0,
+            "cost": null,
+            "calories": null,
+            "walking_minutes_to_burn_calories": null,
+            "is_high_salt": false,
+            "created_at": "2023-06-05 10:35:27",
+            "updated_at": "2025-01-01 12:38:32",
+            "deleted_at": null,
+            "meta": {
+                "eg_ereceipt_item_code": "EG-579872092-0252",
+                "eg_ereceipt_item_type": "EGS",
+                "eg_ereceipt_unit_type": "EA"
+            }
+        }
+    ],
+    "cached_at": 1764973272,
+    "cached_at_readable": "2025-12-05 23:21:12"
+}

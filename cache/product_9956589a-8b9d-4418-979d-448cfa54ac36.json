@@ -1,0 +1,1841 @@
+{
+    "data": {
+        "allergens": [],
+        "nutrition_info": null,
+        "category": {
+            "id": "994ec5d4-21f4-47c6-80ac-672177c0f1e7",
+            "name": "Chicken Burger Sandwitch",
+            "name_localized": null,
+            "reference": "chickenbursandwitch",
+            "image": "https:\/\/foodics-console-production.s3.eu-west-1.amazonaws.com\/images\/448295_1708905915_9b6c9101-6abe-4a12-9f63-56fbd1547a58.jpeg",
+            "created_at": "2023-06-01 16:14:15",
+            "updated_at": "2024-02-26 00:05:17",
+            "deleted_at": null
+        },
+        "tax_group": {
+            "id": "994852e1-a06c-42b6-9acf-453211e7668d",
+            "name": "Tax",
+            "name_localized": null,
+            "reference": "tx-1",
+            "created_at": "2023-05-29 11:17:52",
+            "updated_at": "2023-05-29 11:17:52",
+            "deleted_at": null
+        },
+        "tags": [
+            {
+                "id": "9d60e701-d6e2-47cc-b6af-4b8bb084728d",
+                "type": 7,
+                "name": "Hunger Chicken Burger Sandawitch",
+                "name_localized": null,
+                "created_at": "2024-10-31 17:19:40",
+                "updated_at": "2024-10-31 17:19:40",
+                "deleted_at": null,
+                "pivot": {
+                    "product_id": "9956589a-8b9d-4418-979d-448cfa54ac36",
+                    "tag_id": "9d60e701-d6e2-47cc-b6af-4b8bb084728d"
+                }
+            }
+        ],
+        "groups": [
+            {
+                "pivot": {
+                    "is_active": true
+                },
+                "id": "99bd9b70-958c-48b0-bad1-f51be24ec995",
+                "name": "AF Sandwiches",
+                "name_localized": null,
+                "image": null,
+                "items_index": null,
+                "created_at": "2023-07-26 18:32:37",
+                "updated_at": "2023-07-26 18:49:31",
+                "deleted_at": null
+            },
+            {
+                "pivot": {
+                    "is_active": true
+                },
+                "id": "9c2a78f7-2042-42c0-a1dc-ab332675d6dd",
+                "name": "AMW. Chicken Sandwiches",
+                "name_localized": null,
+                "image": null,
+                "items_index": null,
+                "created_at": "2024-05-30 09:45:20",
+                "updated_at": "2025-07-10 16:08:15",
+                "deleted_at": null
+            },
+            {
+                "pivot": {
+                    "is_active": true
+                },
+                "id": "9d52576c-cc50-4cfb-87be-a687ee8aae41",
+                "name": "Hunger Event Chicken",
+                "name_localized": "hungereventchicken",
+                "image": "https:\/\/foodics-console-production.s3.eu-west-1.amazonaws.com\/images\/448295_1729887165_9d5512ff-a189-4a9b-be48-23cc6f03c6d4.png",
+                "items_index": [
+                    "994ed07b-de9a-4f8a-9bc2-a42e47be4a10",
+                    "994ed07b-d61f-40f2-a26c-3b321c8fb794",
+                    "994ed6d3-5eeb-4f7d-9bfb-759afafcecac",
+                    "994ed6d3-734e-4a00-a7e2-ee7356906bea",
+                    "994ed07b-e80b-4366-b4e6-159a3bc1a381",
+                    "9956589a-8b9d-4418-979d-448cfa54ac36",
+                    "994ed07b-d9ed-424a-8e11-a08ac9a0f9f9",
+                    "99f7619d-e7db-4d36-a800-d8d7453c001c"
+                ],
+                "created_at": "2024-10-24 11:36:36",
+                "updated_at": "2025-09-24 07:53:48",
+                "deleted_at": null
+            },
+            {
+                "pivot": {
+                    "is_active": true
+                },
+                "id": "9d60d0fd-53f4-4c52-a25f-307a2da45d47",
+                "name": "Hunger Chicken Burger Sandawitch",
+                "name_localized": "hchkburgsand",
+                "image": null,
+                "items_index": null,
+                "created_at": "2024-10-31 16:18:06",
+                "updated_at": "2024-10-31 20:47:09",
+                "deleted_at": null
+            }
+        ],
+        "branches": [],
+        "modifiers": [
+            {
+                "options": [
+                    {
+                        "branches": [
+                            {
+                                "pivot": {
+                                    "price": null,
+                                    "is_active": false,
+                                    "is_in_stock": true
+                                },
+                                "id": "9973078e-4a56-4668-acf3-546774e1fc2f",
+                                "name": "Hunger - Nasr City",
+                                "name_localized": null,
+                                "reference": "B01",
+                                "type": 1,
+                                "latitude": null,
+                                "longitude": null,
+                                "phone": null,
+                                "opening_from": "07:00",
+                                "opening_to": "07:00",
+                                "inventory_end_of_day_time": "06:00",
+                                "receipt_header": "{https:\/\/imgur.com\/UQ6atOu.png}",
+                                "receipt_footer": null,
+                                "settings": {
+                                    "branch_tax_number": "579872092",
+                                    "eg_ereceipt_branch_code": "3",
+                                    "sa_zatca_branch_address": [],
+                                    "display_background_image": null,
+                                    "eg_ereceipt_branch_address": {
+                                        "street": "داود الظاهرى",
+                                        "country": "EG",
+                                        "governate": "Cairo",
+                                        "region_city": "Nasr City",
+                                        "building_number": "1"
+                                    },
+                                    "branch_tax_registration_name": "579872092",
+                                    "eg_ereceipt_branch_activity_code": "5610",
+                                    "is_websocket_notifications_enabled": true,
+                                    "branch_commercial_registration_number": null
+                                },
+                                "created_at": "2023-06-19 16:47:50",
+                                "updated_at": "2025-10-06 01:00:52",
+                                "deleted_at": null,
+                                "receives_online_orders": true,
+                                "accepts_reservations": false,
+                                "reservation_duration": 30,
+                                "reservation_times": null,
+                                "address": "0      وحده 1المنشأه السياحيه Kaleido plaza حديقه الطفل ش داود الظاهرى من ش احمد فخرى م نصر القاهره , Nasr City 1 , Cairo , Egypt"
+                            },
+                            {
+                                "pivot": {
+                                    "price": null,
+                                    "is_active": false,
+                                    "is_in_stock": true
+                                },
+                                "id": "99734cd8-552c-40b8-ace8-e12da0534b4b",
+                                "name": "Hunger - 6thOct-MisrMall",
+                                "name_localized": null,
+                                "reference": "B03",
+                                "type": 1,
+                                "latitude": null,
+                                "longitude": null,
+                                "phone": null,
+                                "opening_from": "07:00",
+                                "opening_to": "07:00",
+                                "inventory_end_of_day_time": "06:00",
+                                "receipt_header": "{https:\/\/imgur.com\/UQ6atOu.png}",
+                                "receipt_footer": null,
+                                "settings": {
+                                    "branch_tax_number": "579872092",
+                                    "eg_ereceipt_branch_code": "9",
+                                    "sa_zatca_branch_address": [],
+                                    "display_background_image": null,
+                                    "eg_ereceipt_branch_address": {
+                                        "street": "طريق الواحات",
+                                        "country": "EG",
+                                        "governate": "Giza",
+                                        "region_city": "6th October",
+                                        "building_number": "115"
+                                    },
+                                    "branch_tax_registration_name": "طارق جمال محمد ابراهيم وشركاه اتريا لاداره المطاعم",
+                                    "eg_ereceipt_branch_activity_code": "5610",
+                                    "is_websocket_notifications_enabled": true,
+                                    "branch_commercial_registration_number": null
+                                },
+                                "created_at": "2023-06-19 20:01:35",
+                                "updated_at": "2025-10-06 05:06:57",
+                                "deleted_at": null,
+                                "receives_online_orders": true,
+                                "accepts_reservations": false,
+                                "reservation_duration": 30,
+                                "reservation_times": null,
+                                "address": "0 مدينه 6 أكتوبر محل  Fc 115  مركز تجارى مول مصر طريق الواحات الجيزة , 6 October City (1) , Giza , Egypt"
+                            },
+                            {
+                                "pivot": {
+                                    "price": null,
+                                    "is_active": false,
+                                    "is_in_stock": true
+                                },
+                                "id": "99734d6f-c81c-4c97-a239-c5b4ee6d62aa",
+                                "name": "Hunger - Alex-CityCenter",
+                                "name_localized": null,
+                                "reference": "B04",
+                                "type": 1,
+                                "latitude": null,
+                                "longitude": null,
+                                "phone": null,
+                                "opening_from": "07:00",
+                                "opening_to": "07:00",
+                                "inventory_end_of_day_time": "06:00",
+                                "receipt_header": "{https:\/\/imgur.com\/UQ6atOu.png}",
+                                "receipt_footer": null,
+                                "settings": {
+                                    "branch_tax_number": "579872092",
+                                    "eg_ereceipt_branch_code": "7",
+                                    "sa_zatca_branch_address": [],
+                                    "display_background_image": null,
+                                    "eg_ereceipt_branch_address": {
+                                        "street": "سيتي سنتر",
+                                        "country": "EG",
+                                        "governate": "Alexandria",
+                                        "region_city": "Amreya",
+                                        "building_number": "9"
+                                    },
+                                    "branch_tax_registration_name": "طارق جمال محمد ابراهيم وشركاه اتريا لاداره المطاعم",
+                                    "eg_ereceipt_branch_activity_code": "5610",
+                                    "is_websocket_notifications_enabled": true,
+                                    "branch_commercial_registration_number": null
+                                },
+                                "created_at": "2023-06-19 20:03:14",
+                                "updated_at": "2025-10-06 01:00:55",
+                                "deleted_at": null,
+                                "receives_online_orders": true,
+                                "accepts_reservations": false,
+                                "reservation_duration": 30,
+                                "reservation_times": null,
+                                "address": "0      محل FC9سيتى سنتر اسكندريه القاهره الصحراوى امام حديقه الاسكندريه الدوليه محافظه الاسكندريه , Amreya 1 , Alexandria  , Egypt"
+                            },
+                            {
+                                "pivot": {
+                                    "price": null,
+                                    "is_active": false,
+                                    "is_in_stock": true
+                                },
+                                "id": "99734da0-7e94-4159-9850-02ab02828539",
+                                "name": "Hunger - Openair-Madinty",
+                                "name_localized": null,
+                                "reference": "B05",
+                                "type": 1,
+                                "latitude": null,
+                                "longitude": null,
+                                "phone": null,
+                                "opening_from": "07:00",
+                                "opening_to": "07:00",
+                                "inventory_end_of_day_time": "06:00",
+                                "receipt_header": "{https:\/\/imgur.com\/UQ6atOu.png}",
+                                "receipt_footer": null,
+                                "settings": {
+                                    "branch_tax_number": "579872092",
+                                    "eg_ereceipt_branch_code": "5",
+                                    "sa_zatca_branch_address": [],
+                                    "display_background_image": null,
+                                    "eg_ereceipt_branch_address": {
+                                        "street": "طريق السويس",
+                                        "country": "EG",
+                                        "governate": "Giza",
+                                        "region_city": "مدينتى",
+                                        "building_number": "FF01"
+                                    },
+                                    "branch_tax_registration_name": "طارق جمال محمد ابراهيم وشركاه اتريا لاداره المطاعم",
+                                    "eg_ereceipt_branch_activity_code": "5610",
+                                    "is_websocket_notifications_enabled": true,
+                                    "branch_commercial_registration_number": null
+                                },
+                                "created_at": "2023-06-19 20:03:46",
+                                "updated_at": "2025-10-06 07:03:29",
+                                "deleted_at": null,
+                                "receives_online_orders": true,
+                                "accepts_reservations": false,
+                                "reservation_duration": 30,
+                                "reservation_times": null,
+                                "address": "0      وحده FF01دور ارضى مبنىFمركز تجارى مول اوبن اير مدينتى طريق السويس القاهره الجديده , New Cairo 2 , Cairo , Egypt"
+                            },
+                            {
+                                "pivot": {
+                                    "price": null,
+                                    "is_active": false,
+                                    "is_in_stock": true
+                                },
+                                "id": "99734dbf-f366-4c9f-9d25-520df21a5131",
+                                "name": "Hunger Tanta-Mall",
+                                "name_localized": null,
+                                "reference": "B06",
+                                "type": 1,
+                                "latitude": null,
+                                "longitude": null,
+                                "phone": null,
+                                "opening_from": "07:00",
+                                "opening_to": "07:00",
+                                "inventory_end_of_day_time": "06:00",
+                                "receipt_header": "{https:\/\/imgur.com\/UQ6atOu.png}",
+                                "receipt_footer": null,
+                                "settings": {
+                                    "branch_tax_number": "579872092",
+                                    "eg_ereceipt_branch_code": "8",
+                                    "sa_zatca_branch_address": [],
+                                    "display_background_image": null,
+                                    "eg_ereceipt_branch_address": {
+                                        "street": "مول طنطا",
+                                        "country": "EG",
+                                        "governate": "Gharbia",
+                                        "region_city": "Tanta",
+                                        "building_number": "14"
+                                    },
+                                    "branch_tax_registration_name": "طارق جمال محمد ابراهيم وشركاه اتريا لاداره المطاعم",
+                                    "eg_ereceipt_branch_activity_code": "5610",
+                                    "is_websocket_notifications_enabled": true,
+                                    "branch_commercial_registration_number": null
+                                },
+                                "created_at": "2023-06-19 20:04:07",
+                                "updated_at": "2025-10-06 01:00:53",
+                                "deleted_at": null,
+                                "receives_online_orders": true,
+                                "accepts_reservations": false,
+                                "reservation_duration": 30,
+                                "reservation_times": null,
+                                "address": "0      محل FC14 مول طنطا على قطعه B مدينة طنطا الغربيه , Tanta , Gharbia , Egypt"
+                            },
+                            {
+                                "pivot": {
+                                    "price": null,
+                                    "is_active": false,
+                                    "is_in_stock": true
+                                },
+                                "id": "9980d0f0-5a3b-4e23-b127-0dab5a2ac57e",
+                                "name": "KFS - NasrCity",
+                                "name_localized": null,
+                                "reference": "B07",
+                                "type": 1,
+                                "latitude": null,
+                                "longitude": null,
+                                "phone": null,
+                                "opening_from": "09:00",
+                                "opening_to": "06:00",
+                                "inventory_end_of_day_time": "06:00",
+                                "receipt_header": "{https:\/\/imgur.com\/3uROwo5.png}",
+                                "receipt_footer": null,
+                                "settings": {
+                                    "branch_tax_number": "579872092",
+                                    "eg_ereceipt_branch_code": "12",
+                                    "display_background_image": null,
+                                    "eg_ereceipt_branch_address": {
+                                        "street": "ابو داوود الظاهري",
+                                        "country": "EG",
+                                        "governate": "Cairo",
+                                        "region_city": "Nasr City",
+                                        "building_number": "2"
+                                    },
+                                    "branch_tax_registration_name": "طارق جمال محمد ابراهيم وشركاه اتريا لاداره المطاعم",
+                                    "eg_ereceipt_branch_activity_code": "5610",
+                                    "is_websocket_notifications_enabled": true,
+                                    "branch_commercial_registration_number": null
+                                },
+                                "created_at": "2023-06-26 13:16:42",
+                                "updated_at": "2025-10-20 09:39:51",
+                                "deleted_at": null,
+                                "receives_online_orders": true,
+                                "accepts_reservations": false,
+                                "reservation_duration": 30,
+                                "reservation_times": null,
+                                "address": "وحدة 2 منشاة سياحية Kaleido plazaحديقة الطفل ابو داوود الظاهري مدينة نصرالقاهره"
+                            },
+                            {
+                                "pivot": {
+                                    "price": 95,
+                                    "is_active": false,
+                                    "is_in_stock": true
+                                },
+                                "id": "9c026fc5-dbe9-4e48-924a-b000966a8283",
+                                "name": "Exhibition Land Brn",
+                                "name_localized": null,
+                                "reference": "B08",
+                                "type": 1,
+                                "latitude": null,
+                                "longitude": null,
+                                "phone": null,
+                                "opening_from": "07:00",
+                                "opening_to": "07:00",
+                                "inventory_end_of_day_time": "06:00",
+                                "receipt_header": "{https:\/\/imgur.com\/UQ6atOu.png}",
+                                "receipt_footer": null,
+                                "settings": {
+                                    "display_background_image": null,
+                                    "eg_ereceipt_branch_address": {
+                                        "street": null,
+                                        "country": null,
+                                        "governate": "CAIRO",
+                                        "region_city": null,
+                                        "building_number": null
+                                    },
+                                    "is_websocket_notifications_enabled": true,
+                                    "branch_commercial_registration_number": null
+                                },
+                                "created_at": "2024-05-10 12:06:31",
+                                "updated_at": "2025-10-06 10:15:08",
+                                "deleted_at": null,
+                                "receives_online_orders": true,
+                                "accepts_reservations": false,
+                                "reservation_duration": 30,
+                                "reservation_times": null,
+                                "address": null
+                            },
+                            {
+                                "pivot": {
+                                    "price": null,
+                                    "is_active": false,
+                                    "is_in_stock": true
+                                },
+                                "id": "9e05891e-5460-458c-a853-5ef7aead604c",
+                                "name": "Hunger - Pearl Mall",
+                                "name_localized": null,
+                                "reference": "B10",
+                                "type": 1,
+                                "latitude": null,
+                                "longitude": null,
+                                "phone": null,
+                                "opening_from": "07:00",
+                                "opening_to": "06:00",
+                                "inventory_end_of_day_time": "00:00",
+                                "receipt_header": "{https:\/\/imgur.com\/UQ6atOu.png}",
+                                "receipt_footer": null,
+                                "settings": {
+                                    "branch_tax_number": "579872092",
+                                    "eg_ereceipt_branch_code": "11",
+                                    "eg_ereceipt_branch_address": {
+                                        "street": "منتجع بيرل دي روا",
+                                        "country": "EG",
+                                        "governate": "Cairo",
+                                        "region_city": "القاهره الجديده",
+                                        "building_number": "1305"
+                                    },
+                                    "branch_tax_registration_name": "طارق جمال محمد ابراهيم وشركاه اتريا لاداره المطاعم",
+                                    "eg_ereceipt_branch_activity_code": "5610",
+                                    "is_websocket_notifications_enabled": true
+                                },
+                                "created_at": "2025-01-21 13:28:44",
+                                "updated_at": "2025-10-06 01:00:51",
+                                "deleted_at": null,
+                                "receives_online_orders": true,
+                                "accepts_reservations": false,
+                                "reservation_duration": 30,
+                                "reservation_times": null,
+                                "address": "محل PE-09 منتجع بيرل دي روا مبني 1305 القاهره الجديده القاهرة"
+                            },
+                            {
+                                "pivot": {
+                                    "price": 95,
+                                    "is_active": false,
+                                    "is_in_stock": true
+                                },
+                                "id": "9f0fc0e3-8f78-4249-905c-c99fc3c0ebb5",
+                                "name": "Hunger -Mariena - NC",
+                                "name_localized": null,
+                                "reference": "B10MNC",
+                                "type": 1,
+                                "latitude": null,
+                                "longitude": null,
+                                "phone": null,
+                                "opening_from": "07:00",
+                                "opening_to": "07:00",
+                                "inventory_end_of_day_time": "06:00",
+                                "receipt_header": "{https:\/\/imgur.com\/UQ6atOu.png}",
+                                "receipt_footer": null,
+                                "settings": {
+                                    "sa_zatca_branch_address": [],
+                                    "eg_ereceipt_branch_address": {
+                                        "country": "EG",
+                                        "region_city": "Alalmien"
+                                    },
+                                    "branch_tax_registration_name": "طارق جمال محمد ابراهيم وشركاه اتريا لاداره المطاعم",
+                                    "is_websocket_notifications_enabled": true
+                                },
+                                "created_at": "2025-06-02 21:34:54",
+                                "updated_at": "2025-10-23 09:19:07",
+                                "deleted_at": null,
+                                "receives_online_orders": true,
+                                "accepts_reservations": false,
+                                "reservation_duration": 30,
+                                "reservation_times": null,
+                                "address": null
+                            },
+                            {
+                                "pivot": {
+                                    "price": null,
+                                    "is_active": false,
+                                    "is_in_stock": true
+                                },
+                                "id": "9f0fc932-5231-4677-8e5e-ed3fc305b834",
+                                "name": "Hunger - Distict 5",
+                                "name_localized": null,
+                                "reference": "B11",
+                                "type": 1,
+                                "latitude": null,
+                                "longitude": null,
+                                "phone": null,
+                                "opening_from": "07:00",
+                                "opening_to": "07:00",
+                                "inventory_end_of_day_time": "06:00",
+                                "receipt_header": "{https:\/\/imgur.com\/UQ6atOu.png}",
+                                "receipt_footer": null,
+                                "settings": {
+                                    "sa_zatca_branch_address": [],
+                                    "eg_ereceipt_branch_address": {
+                                        "country": "EG",
+                                        "governate": "CAIRO",
+                                        "region_city": "Tagamo3"
+                                    },
+                                    "branch_tax_registration_name": "طارق جمال محمد ابراهيم وشركاه اتريا لاداره المطاعم",
+                                    "is_websocket_notifications_enabled": true
+                                },
+                                "created_at": "2025-06-02 21:58:08",
+                                "updated_at": "2025-10-06 06:52:43",
+                                "deleted_at": null,
+                                "receives_online_orders": true,
+                                "accepts_reservations": false,
+                                "reservation_duration": 30,
+                                "reservation_times": null,
+                                "address": null
+                            },
+                            {
+                                "pivot": {
+                                    "price": null,
+                                    "is_active": false,
+                                    "is_in_stock": true
+                                },
+                                "id": "9f53b88f-1a08-4775-96b8-30705113e746",
+                                "name": "Carrefour Maadi City Center",
+                                "name_localized": "maadiCitycenter",
+                                "reference": "maadicarrf",
+                                "type": 1,
+                                "latitude": null,
+                                "longitude": null,
+                                "phone": null,
+                                "opening_from": "07:00",
+                                "opening_to": "07:00",
+                                "inventory_end_of_day_time": "06:00",
+                                "receipt_header": "{https:\/\/imgur.com\/UQ6atOu.png}",
+                                "receipt_footer": null,
+                                "settings": {
+                                    "branch_tax_number": "579872092",
+                                    "sa_zatca_branch_address": [],
+                                    "eg_ereceipt_branch_address": {
+                                        "governate": "Cairo",
+                                        "region_city": "Maadi"
+                                    },
+                                    "branch_tax_registration_name": "طارق جمال محمد ابراهيم وشركاه اتريا لاداره المطاعم",
+                                    "is_websocket_notifications_enabled": true
+                                },
+                                "created_at": "2025-07-06 16:27:54",
+                                "updated_at": "2025-10-06 05:47:51",
+                                "deleted_at": null,
+                                "receives_online_orders": true,
+                                "accepts_reservations": false,
+                                "reservation_duration": 30,
+                                "reservation_times": null,
+                                "address": null
+                            }
+                        ],
+                        "id": "995656f5-8b58-4e17-b9fc-bed4a4cb8e65",
+                        "name": "Flavious Junior",
+                        "name_localized": null,
+                        "sku": "sk-0249",
+                        "is_active": false,
+                        "costing_method": 2,
+                        "price": 89,
+                        "cost": null,
+                        "calories": null,
+                        "created_at": "2023-06-05 10:30:51",
+                        "updated_at": "2025-07-20 10:48:57",
+                        "deleted_at": null,
+                        "index": 0
+                    },
+                    {
+                        "branches": [
+                            {
+                                "pivot": {
+                                    "price": 155,
+                                    "is_active": true,
+                                    "is_in_stock": true
+                                },
+                                "id": "9980d0f0-5a3b-4e23-b127-0dab5a2ac57e",
+                                "name": "KFS - NasrCity",
+                                "name_localized": null,
+                                "reference": "B07",
+                                "type": 1,
+                                "latitude": null,
+                                "longitude": null,
+                                "phone": null,
+                                "opening_from": "09:00",
+                                "opening_to": "06:00",
+                                "inventory_end_of_day_time": "06:00",
+                                "receipt_header": "{https:\/\/imgur.com\/3uROwo5.png}",
+                                "receipt_footer": null,
+                                "settings": {
+                                    "branch_tax_number": "579872092",
+                                    "eg_ereceipt_branch_code": "12",
+                                    "display_background_image": null,
+                                    "eg_ereceipt_branch_address": {
+                                        "street": "ابو داوود الظاهري",
+                                        "country": "EG",
+                                        "governate": "Cairo",
+                                        "region_city": "Nasr City",
+                                        "building_number": "2"
+                                    },
+                                    "branch_tax_registration_name": "طارق جمال محمد ابراهيم وشركاه اتريا لاداره المطاعم",
+                                    "eg_ereceipt_branch_activity_code": "5610",
+                                    "is_websocket_notifications_enabled": true,
+                                    "branch_commercial_registration_number": null
+                                },
+                                "created_at": "2023-06-26 13:16:42",
+                                "updated_at": "2025-10-20 09:39:51",
+                                "deleted_at": null,
+                                "receives_online_orders": true,
+                                "accepts_reservations": false,
+                                "reservation_duration": 30,
+                                "reservation_times": null,
+                                "address": "وحدة 2 منشاة سياحية Kaleido plazaحديقة الطفل ابو داوود الظاهري مدينة نصرالقاهره"
+                            },
+                            {
+                                "pivot": {
+                                    "price": 145,
+                                    "is_active": true,
+                                    "is_in_stock": true
+                                },
+                                "id": "9c026fc5-dbe9-4e48-924a-b000966a8283",
+                                "name": "Exhibition Land Brn",
+                                "name_localized": null,
+                                "reference": "B08",
+                                "type": 1,
+                                "latitude": null,
+                                "longitude": null,
+                                "phone": null,
+                                "opening_from": "07:00",
+                                "opening_to": "07:00",
+                                "inventory_end_of_day_time": "06:00",
+                                "receipt_header": "{https:\/\/imgur.com\/UQ6atOu.png}",
+                                "receipt_footer": null,
+                                "settings": {
+                                    "display_background_image": null,
+                                    "eg_ereceipt_branch_address": {
+                                        "street": null,
+                                        "country": null,
+                                        "governate": "CAIRO",
+                                        "region_city": null,
+                                        "building_number": null
+                                    },
+                                    "is_websocket_notifications_enabled": true,
+                                    "branch_commercial_registration_number": null
+                                },
+                                "created_at": "2024-05-10 12:06:31",
+                                "updated_at": "2025-10-06 10:15:08",
+                                "deleted_at": null,
+                                "receives_online_orders": true,
+                                "accepts_reservations": false,
+                                "reservation_duration": 30,
+                                "reservation_times": null,
+                                "address": null
+                            },
+                            {
+                                "pivot": {
+                                    "price": 155,
+                                    "is_active": true,
+                                    "is_in_stock": true
+                                },
+                                "id": "9f0fc0e3-8f78-4249-905c-c99fc3c0ebb5",
+                                "name": "Hunger -Mariena - NC",
+                                "name_localized": null,
+                                "reference": "B10MNC",
+                                "type": 1,
+                                "latitude": null,
+                                "longitude": null,
+                                "phone": null,
+                                "opening_from": "07:00",
+                                "opening_to": "07:00",
+                                "inventory_end_of_day_time": "06:00",
+                                "receipt_header": "{https:\/\/imgur.com\/UQ6atOu.png}",
+                                "receipt_footer": null,
+                                "settings": {
+                                    "sa_zatca_branch_address": [],
+                                    "eg_ereceipt_branch_address": {
+                                        "country": "EG",
+                                        "region_city": "Alalmien"
+                                    },
+                                    "branch_tax_registration_name": "طارق جمال محمد ابراهيم وشركاه اتريا لاداره المطاعم",
+                                    "is_websocket_notifications_enabled": true
+                                },
+                                "created_at": "2025-06-02 21:34:54",
+                                "updated_at": "2025-10-23 09:19:07",
+                                "deleted_at": null,
+                                "receives_online_orders": true,
+                                "accepts_reservations": false,
+                                "reservation_duration": 30,
+                                "reservation_times": null,
+                                "address": null
+                            }
+                        ],
+                        "id": "99565713-46db-4b36-b6ee-e89ba2bd078d",
+                        "name": "Flavious Single",
+                        "name_localized": null,
+                        "sku": "sk-0250",
+                        "is_active": true,
+                        "costing_method": 2,
+                        "price": 145,
+                        "cost": null,
+                        "calories": null,
+                        "created_at": "2023-06-05 10:31:11",
+                        "updated_at": "2025-10-25 21:35:51",
+                        "deleted_at": null,
+                        "index": 0
+                    },
+                    {
+                        "branches": [
+                            {
+                                "pivot": {
+                                    "price": 220,
+                                    "is_active": true,
+                                    "is_in_stock": true
+                                },
+                                "id": "9980d0f0-5a3b-4e23-b127-0dab5a2ac57e",
+                                "name": "KFS - NasrCity",
+                                "name_localized": null,
+                                "reference": "B07",
+                                "type": 1,
+                                "latitude": null,
+                                "longitude": null,
+                                "phone": null,
+                                "opening_from": "09:00",
+                                "opening_to": "06:00",
+                                "inventory_end_of_day_time": "06:00",
+                                "receipt_header": "{https:\/\/imgur.com\/3uROwo5.png}",
+                                "receipt_footer": null,
+                                "settings": {
+                                    "branch_tax_number": "579872092",
+                                    "eg_ereceipt_branch_code": "12",
+                                    "display_background_image": null,
+                                    "eg_ereceipt_branch_address": {
+                                        "street": "ابو داوود الظاهري",
+                                        "country": "EG",
+                                        "governate": "Cairo",
+                                        "region_city": "Nasr City",
+                                        "building_number": "2"
+                                    },
+                                    "branch_tax_registration_name": "طارق جمال محمد ابراهيم وشركاه اتريا لاداره المطاعم",
+                                    "eg_ereceipt_branch_activity_code": "5610",
+                                    "is_websocket_notifications_enabled": true,
+                                    "branch_commercial_registration_number": null
+                                },
+                                "created_at": "2023-06-26 13:16:42",
+                                "updated_at": "2025-10-20 09:39:51",
+                                "deleted_at": null,
+                                "receives_online_orders": true,
+                                "accepts_reservations": false,
+                                "reservation_duration": 30,
+                                "reservation_times": null,
+                                "address": "وحدة 2 منشاة سياحية Kaleido plazaحديقة الطفل ابو داوود الظاهري مدينة نصرالقاهره"
+                            },
+                            {
+                                "pivot": {
+                                    "price": 220,
+                                    "is_active": false,
+                                    "is_in_stock": true
+                                },
+                                "id": "9c026fc5-dbe9-4e48-924a-b000966a8283",
+                                "name": "Exhibition Land Brn",
+                                "name_localized": null,
+                                "reference": "B08",
+                                "type": 1,
+                                "latitude": null,
+                                "longitude": null,
+                                "phone": null,
+                                "opening_from": "07:00",
+                                "opening_to": "07:00",
+                                "inventory_end_of_day_time": "06:00",
+                                "receipt_header": "{https:\/\/imgur.com\/UQ6atOu.png}",
+                                "receipt_footer": null,
+                                "settings": {
+                                    "display_background_image": null,
+                                    "eg_ereceipt_branch_address": {
+                                        "street": null,
+                                        "country": null,
+                                        "governate": "CAIRO",
+                                        "region_city": null,
+                                        "building_number": null
+                                    },
+                                    "is_websocket_notifications_enabled": true,
+                                    "branch_commercial_registration_number": null
+                                },
+                                "created_at": "2024-05-10 12:06:31",
+                                "updated_at": "2025-10-06 10:15:08",
+                                "deleted_at": null,
+                                "receives_online_orders": true,
+                                "accepts_reservations": false,
+                                "reservation_duration": 30,
+                                "reservation_times": null,
+                                "address": null
+                            },
+                            {
+                                "pivot": {
+                                    "price": 220,
+                                    "is_active": true,
+                                    "is_in_stock": true
+                                },
+                                "id": "9f0fc0e3-8f78-4249-905c-c99fc3c0ebb5",
+                                "name": "Hunger -Mariena - NC",
+                                "name_localized": null,
+                                "reference": "B10MNC",
+                                "type": 1,
+                                "latitude": null,
+                                "longitude": null,
+                                "phone": null,
+                                "opening_from": "07:00",
+                                "opening_to": "07:00",
+                                "inventory_end_of_day_time": "06:00",
+                                "receipt_header": "{https:\/\/imgur.com\/UQ6atOu.png}",
+                                "receipt_footer": null,
+                                "settings": {
+                                    "sa_zatca_branch_address": [],
+                                    "eg_ereceipt_branch_address": {
+                                        "country": "EG",
+                                        "region_city": "Alalmien"
+                                    },
+                                    "branch_tax_registration_name": "طارق جمال محمد ابراهيم وشركاه اتريا لاداره المطاعم",
+                                    "is_websocket_notifications_enabled": true
+                                },
+                                "created_at": "2025-06-02 21:34:54",
+                                "updated_at": "2025-10-23 09:19:07",
+                                "deleted_at": null,
+                                "receives_online_orders": true,
+                                "accepts_reservations": false,
+                                "reservation_duration": 30,
+                                "reservation_times": null,
+                                "address": null
+                            }
+                        ],
+                        "id": "99565738-7295-4f8b-9fe8-2eb6bffb8c9d",
+                        "name": "Flavious Double",
+                        "name_localized": null,
+                        "sku": "sk-0251",
+                        "is_active": true,
+                        "costing_method": 2,
+                        "price": 200,
+                        "cost": null,
+                        "calories": null,
+                        "created_at": "2023-06-05 10:31:35",
+                        "updated_at": "2025-10-25 10:35:44",
+                        "deleted_at": null,
+                        "index": 0
+                    }
+                ],
+                "pivot": {
+                    "is_splittable_in_half": false,
+                    "unique_options": false,
+                    "minimum_options": 1,
+                    "maximum_options": 1,
+                    "free_options": 0,
+                    "default_options_ids": [],
+                    "excluded_options_ids": [],
+                    "index": 0
+                },
+                "id": "995656c2-8c12-45c5-ab22-ac330b3d3bbd",
+                "name": "Flavious Size",
+                "name_localized": null,
+                "is_ready": true,
+                "reference": "flavious-size",
+                "created_at": "2023-06-05 10:30:18",
+                "updated_at": "2025-07-20 10:48:57",
+                "deleted_at": null
+            },
+            {
+                "options": [
+                    {
+                        "branches": [
+                            {
+                                "pivot": {
+                                    "price": null,
+                                    "is_active": true,
+                                    "is_in_stock": true
+                                },
+                                "id": "9980d0f0-5a3b-4e23-b127-0dab5a2ac57e",
+                                "name": "KFS - NasrCity",
+                                "name_localized": null,
+                                "reference": "B07",
+                                "type": 1,
+                                "latitude": null,
+                                "longitude": null,
+                                "phone": null,
+                                "opening_from": "09:00",
+                                "opening_to": "06:00",
+                                "inventory_end_of_day_time": "06:00",
+                                "receipt_header": "{https:\/\/imgur.com\/3uROwo5.png}",
+                                "receipt_footer": null,
+                                "settings": {
+                                    "branch_tax_number": "579872092",
+                                    "eg_ereceipt_branch_code": "12",
+                                    "display_background_image": null,
+                                    "eg_ereceipt_branch_address": {
+                                        "street": "ابو داوود الظاهري",
+                                        "country": "EG",
+                                        "governate": "Cairo",
+                                        "region_city": "Nasr City",
+                                        "building_number": "2"
+                                    },
+                                    "branch_tax_registration_name": "طارق جمال محمد ابراهيم وشركاه اتريا لاداره المطاعم",
+                                    "eg_ereceipt_branch_activity_code": "5610",
+                                    "is_websocket_notifications_enabled": true,
+                                    "branch_commercial_registration_number": null
+                                },
+                                "created_at": "2023-06-26 13:16:42",
+                                "updated_at": "2025-10-20 09:39:51",
+                                "deleted_at": null,
+                                "receives_online_orders": true,
+                                "accepts_reservations": false,
+                                "reservation_duration": 30,
+                                "reservation_times": null,
+                                "address": "وحدة 2 منشاة سياحية Kaleido plazaحديقة الطفل ابو داوود الظاهري مدينة نصرالقاهره"
+                            },
+                            {
+                                "pivot": {
+                                    "price": null,
+                                    "is_active": false,
+                                    "is_in_stock": true
+                                },
+                                "id": "9c026fc5-dbe9-4e48-924a-b000966a8283",
+                                "name": "Exhibition Land Brn",
+                                "name_localized": null,
+                                "reference": "B08",
+                                "type": 1,
+                                "latitude": null,
+                                "longitude": null,
+                                "phone": null,
+                                "opening_from": "07:00",
+                                "opening_to": "07:00",
+                                "inventory_end_of_day_time": "06:00",
+                                "receipt_header": "{https:\/\/imgur.com\/UQ6atOu.png}",
+                                "receipt_footer": null,
+                                "settings": {
+                                    "display_background_image": null,
+                                    "eg_ereceipt_branch_address": {
+                                        "street": null,
+                                        "country": null,
+                                        "governate": "CAIRO",
+                                        "region_city": null,
+                                        "building_number": null
+                                    },
+                                    "is_websocket_notifications_enabled": true,
+                                    "branch_commercial_registration_number": null
+                                },
+                                "created_at": "2024-05-10 12:06:31",
+                                "updated_at": "2025-10-06 10:15:08",
+                                "deleted_at": null,
+                                "receives_online_orders": true,
+                                "accepts_reservations": false,
+                                "reservation_duration": 30,
+                                "reservation_times": null,
+                                "address": null
+                            }
+                        ],
+                        "id": "997084f6-dd38-4f18-bcfa-d7193dfb5d02",
+                        "name": "Buffalo Sauce",
+                        "name_localized": null,
+                        "sku": "sk-0353",
+                        "is_active": true,
+                        "costing_method": 2,
+                        "price": 20,
+                        "cost": null,
+                        "calories": null,
+                        "created_at": "2023-06-18 10:51:01",
+                        "updated_at": "2025-03-30 21:59:43",
+                        "deleted_at": null,
+                        "index": 0
+                    },
+                    {
+                        "branches": [
+                            {
+                                "pivot": {
+                                    "price": null,
+                                    "is_active": true,
+                                    "is_in_stock": true
+                                },
+                                "id": "9980d0f0-5a3b-4e23-b127-0dab5a2ac57e",
+                                "name": "KFS - NasrCity",
+                                "name_localized": null,
+                                "reference": "B07",
+                                "type": 1,
+                                "latitude": null,
+                                "longitude": null,
+                                "phone": null,
+                                "opening_from": "09:00",
+                                "opening_to": "06:00",
+                                "inventory_end_of_day_time": "06:00",
+                                "receipt_header": "{https:\/\/imgur.com\/3uROwo5.png}",
+                                "receipt_footer": null,
+                                "settings": {
+                                    "branch_tax_number": "579872092",
+                                    "eg_ereceipt_branch_code": "12",
+                                    "display_background_image": null,
+                                    "eg_ereceipt_branch_address": {
+                                        "street": "ابو داوود الظاهري",
+                                        "country": "EG",
+                                        "governate": "Cairo",
+                                        "region_city": "Nasr City",
+                                        "building_number": "2"
+                                    },
+                                    "branch_tax_registration_name": "طارق جمال محمد ابراهيم وشركاه اتريا لاداره المطاعم",
+                                    "eg_ereceipt_branch_activity_code": "5610",
+                                    "is_websocket_notifications_enabled": true,
+                                    "branch_commercial_registration_number": null
+                                },
+                                "created_at": "2023-06-26 13:16:42",
+                                "updated_at": "2025-10-20 09:39:51",
+                                "deleted_at": null,
+                                "receives_online_orders": true,
+                                "accepts_reservations": false,
+                                "reservation_duration": 30,
+                                "reservation_times": null,
+                                "address": "وحدة 2 منشاة سياحية Kaleido plazaحديقة الطفل ابو داوود الظاهري مدينة نصرالقاهره"
+                            },
+                            {
+                                "pivot": {
+                                    "price": null,
+                                    "is_active": false,
+                                    "is_in_stock": true
+                                },
+                                "id": "9c026fc5-dbe9-4e48-924a-b000966a8283",
+                                "name": "Exhibition Land Brn",
+                                "name_localized": null,
+                                "reference": "B08",
+                                "type": 1,
+                                "latitude": null,
+                                "longitude": null,
+                                "phone": null,
+                                "opening_from": "07:00",
+                                "opening_to": "07:00",
+                                "inventory_end_of_day_time": "06:00",
+                                "receipt_header": "{https:\/\/imgur.com\/UQ6atOu.png}",
+                                "receipt_footer": null,
+                                "settings": {
+                                    "display_background_image": null,
+                                    "eg_ereceipt_branch_address": {
+                                        "street": null,
+                                        "country": null,
+                                        "governate": "CAIRO",
+                                        "region_city": null,
+                                        "building_number": null
+                                    },
+                                    "is_websocket_notifications_enabled": true,
+                                    "branch_commercial_registration_number": null
+                                },
+                                "created_at": "2024-05-10 12:06:31",
+                                "updated_at": "2025-10-06 10:15:08",
+                                "deleted_at": null,
+                                "receives_online_orders": true,
+                                "accepts_reservations": false,
+                                "reservation_duration": 30,
+                                "reservation_times": null,
+                                "address": null
+                            }
+                        ],
+                        "id": "99708559-e9ef-4fc2-a821-6fd57f238c1c",
+                        "name": "Ranch Sauce",
+                        "name_localized": null,
+                        "sku": "sk-0354",
+                        "is_active": true,
+                        "costing_method": 2,
+                        "price": 20,
+                        "cost": null,
+                        "calories": null,
+                        "created_at": "2023-06-18 10:52:06",
+                        "updated_at": "2025-03-30 21:59:33",
+                        "deleted_at": null,
+                        "index": 0
+                    },
+                    {
+                        "branches": [
+                            {
+                                "pivot": {
+                                    "price": null,
+                                    "is_active": true,
+                                    "is_in_stock": true
+                                },
+                                "id": "9980d0f0-5a3b-4e23-b127-0dab5a2ac57e",
+                                "name": "KFS - NasrCity",
+                                "name_localized": null,
+                                "reference": "B07",
+                                "type": 1,
+                                "latitude": null,
+                                "longitude": null,
+                                "phone": null,
+                                "opening_from": "09:00",
+                                "opening_to": "06:00",
+                                "inventory_end_of_day_time": "06:00",
+                                "receipt_header": "{https:\/\/imgur.com\/3uROwo5.png}",
+                                "receipt_footer": null,
+                                "settings": {
+                                    "branch_tax_number": "579872092",
+                                    "eg_ereceipt_branch_code": "12",
+                                    "display_background_image": null,
+                                    "eg_ereceipt_branch_address": {
+                                        "street": "ابو داوود الظاهري",
+                                        "country": "EG",
+                                        "governate": "Cairo",
+                                        "region_city": "Nasr City",
+                                        "building_number": "2"
+                                    },
+                                    "branch_tax_registration_name": "طارق جمال محمد ابراهيم وشركاه اتريا لاداره المطاعم",
+                                    "eg_ereceipt_branch_activity_code": "5610",
+                                    "is_websocket_notifications_enabled": true,
+                                    "branch_commercial_registration_number": null
+                                },
+                                "created_at": "2023-06-26 13:16:42",
+                                "updated_at": "2025-10-20 09:39:51",
+                                "deleted_at": null,
+                                "receives_online_orders": true,
+                                "accepts_reservations": false,
+                                "reservation_duration": 30,
+                                "reservation_times": null,
+                                "address": "وحدة 2 منشاة سياحية Kaleido plazaحديقة الطفل ابو داوود الظاهري مدينة نصرالقاهره"
+                            },
+                            {
+                                "pivot": {
+                                    "price": null,
+                                    "is_active": false,
+                                    "is_in_stock": true
+                                },
+                                "id": "9c026fc5-dbe9-4e48-924a-b000966a8283",
+                                "name": "Exhibition Land Brn",
+                                "name_localized": null,
+                                "reference": "B08",
+                                "type": 1,
+                                "latitude": null,
+                                "longitude": null,
+                                "phone": null,
+                                "opening_from": "07:00",
+                                "opening_to": "07:00",
+                                "inventory_end_of_day_time": "06:00",
+                                "receipt_header": "{https:\/\/imgur.com\/UQ6atOu.png}",
+                                "receipt_footer": null,
+                                "settings": {
+                                    "display_background_image": null,
+                                    "eg_ereceipt_branch_address": {
+                                        "street": null,
+                                        "country": null,
+                                        "governate": "CAIRO",
+                                        "region_city": null,
+                                        "building_number": null
+                                    },
+                                    "is_websocket_notifications_enabled": true,
+                                    "branch_commercial_registration_number": null
+                                },
+                                "created_at": "2024-05-10 12:06:31",
+                                "updated_at": "2025-10-06 10:15:08",
+                                "deleted_at": null,
+                                "receives_online_orders": true,
+                                "accepts_reservations": false,
+                                "reservation_duration": 30,
+                                "reservation_times": null,
+                                "address": null
+                            }
+                        ],
+                        "id": "9970857a-2d3c-4e1e-9fac-6058d5a948bd",
+                        "name": "BBQ Sauce",
+                        "name_localized": null,
+                        "sku": "sk-0355",
+                        "is_active": true,
+                        "costing_method": 2,
+                        "price": 20,
+                        "cost": null,
+                        "calories": null,
+                        "created_at": "2023-06-18 10:52:27",
+                        "updated_at": "2025-03-30 21:59:22",
+                        "deleted_at": null,
+                        "index": 0
+                    },
+                    {
+                        "branches": [
+                            {
+                                "pivot": {
+                                    "price": null,
+                                    "is_active": true,
+                                    "is_in_stock": true
+                                },
+                                "id": "9980d0f0-5a3b-4e23-b127-0dab5a2ac57e",
+                                "name": "KFS - NasrCity",
+                                "name_localized": null,
+                                "reference": "B07",
+                                "type": 1,
+                                "latitude": null,
+                                "longitude": null,
+                                "phone": null,
+                                "opening_from": "09:00",
+                                "opening_to": "06:00",
+                                "inventory_end_of_day_time": "06:00",
+                                "receipt_header": "{https:\/\/imgur.com\/3uROwo5.png}",
+                                "receipt_footer": null,
+                                "settings": {
+                                    "branch_tax_number": "579872092",
+                                    "eg_ereceipt_branch_code": "12",
+                                    "display_background_image": null,
+                                    "eg_ereceipt_branch_address": {
+                                        "street": "ابو داوود الظاهري",
+                                        "country": "EG",
+                                        "governate": "Cairo",
+                                        "region_city": "Nasr City",
+                                        "building_number": "2"
+                                    },
+                                    "branch_tax_registration_name": "طارق جمال محمد ابراهيم وشركاه اتريا لاداره المطاعم",
+                                    "eg_ereceipt_branch_activity_code": "5610",
+                                    "is_websocket_notifications_enabled": true,
+                                    "branch_commercial_registration_number": null
+                                },
+                                "created_at": "2023-06-26 13:16:42",
+                                "updated_at": "2025-10-20 09:39:51",
+                                "deleted_at": null,
+                                "receives_online_orders": true,
+                                "accepts_reservations": false,
+                                "reservation_duration": 30,
+                                "reservation_times": null,
+                                "address": "وحدة 2 منشاة سياحية Kaleido plazaحديقة الطفل ابو داوود الظاهري مدينة نصرالقاهره"
+                            },
+                            {
+                                "pivot": {
+                                    "price": null,
+                                    "is_active": false,
+                                    "is_in_stock": true
+                                },
+                                "id": "9c026fc5-dbe9-4e48-924a-b000966a8283",
+                                "name": "Exhibition Land Brn",
+                                "name_localized": null,
+                                "reference": "B08",
+                                "type": 1,
+                                "latitude": null,
+                                "longitude": null,
+                                "phone": null,
+                                "opening_from": "07:00",
+                                "opening_to": "07:00",
+                                "inventory_end_of_day_time": "06:00",
+                                "receipt_header": "{https:\/\/imgur.com\/UQ6atOu.png}",
+                                "receipt_footer": null,
+                                "settings": {
+                                    "display_background_image": null,
+                                    "eg_ereceipt_branch_address": {
+                                        "street": null,
+                                        "country": null,
+                                        "governate": "CAIRO",
+                                        "region_city": null,
+                                        "building_number": null
+                                    },
+                                    "is_websocket_notifications_enabled": true,
+                                    "branch_commercial_registration_number": null
+                                },
+                                "created_at": "2024-05-10 12:06:31",
+                                "updated_at": "2025-10-06 10:15:08",
+                                "deleted_at": null,
+                                "receives_online_orders": true,
+                                "accepts_reservations": false,
+                                "reservation_duration": 30,
+                                "reservation_times": null,
+                                "address": null
+                            }
+                        ],
+                        "id": "997085cd-ee92-4c93-9449-fb468be7cf22",
+                        "name": "Cheese Sauce",
+                        "name_localized": null,
+                        "sku": "sk-0356",
+                        "is_active": true,
+                        "costing_method": 2,
+                        "price": 20,
+                        "cost": null,
+                        "calories": null,
+                        "created_at": "2023-06-18 10:53:22",
+                        "updated_at": "2025-08-11 14:09:54",
+                        "deleted_at": null,
+                        "index": 0
+                    },
+                    {
+                        "branches": [
+                            {
+                                "pivot": {
+                                    "price": null,
+                                    "is_active": true,
+                                    "is_in_stock": true
+                                },
+                                "id": "9980d0f0-5a3b-4e23-b127-0dab5a2ac57e",
+                                "name": "KFS - NasrCity",
+                                "name_localized": null,
+                                "reference": "B07",
+                                "type": 1,
+                                "latitude": null,
+                                "longitude": null,
+                                "phone": null,
+                                "opening_from": "09:00",
+                                "opening_to": "06:00",
+                                "inventory_end_of_day_time": "06:00",
+                                "receipt_header": "{https:\/\/imgur.com\/3uROwo5.png}",
+                                "receipt_footer": null,
+                                "settings": {
+                                    "branch_tax_number": "579872092",
+                                    "eg_ereceipt_branch_code": "12",
+                                    "display_background_image": null,
+                                    "eg_ereceipt_branch_address": {
+                                        "street": "ابو داوود الظاهري",
+                                        "country": "EG",
+                                        "governate": "Cairo",
+                                        "region_city": "Nasr City",
+                                        "building_number": "2"
+                                    },
+                                    "branch_tax_registration_name": "طارق جمال محمد ابراهيم وشركاه اتريا لاداره المطاعم",
+                                    "eg_ereceipt_branch_activity_code": "5610",
+                                    "is_websocket_notifications_enabled": true,
+                                    "branch_commercial_registration_number": null
+                                },
+                                "created_at": "2023-06-26 13:16:42",
+                                "updated_at": "2025-10-20 09:39:51",
+                                "deleted_at": null,
+                                "receives_online_orders": true,
+                                "accepts_reservations": false,
+                                "reservation_duration": 30,
+                                "reservation_times": null,
+                                "address": "وحدة 2 منشاة سياحية Kaleido plazaحديقة الطفل ابو داوود الظاهري مدينة نصرالقاهره"
+                            },
+                            {
+                                "pivot": {
+                                    "price": null,
+                                    "is_active": false,
+                                    "is_in_stock": true
+                                },
+                                "id": "9c026fc5-dbe9-4e48-924a-b000966a8283",
+                                "name": "Exhibition Land Brn",
+                                "name_localized": null,
+                                "reference": "B08",
+                                "type": 1,
+                                "latitude": null,
+                                "longitude": null,
+                                "phone": null,
+                                "opening_from": "07:00",
+                                "opening_to": "07:00",
+                                "inventory_end_of_day_time": "06:00",
+                                "receipt_header": "{https:\/\/imgur.com\/UQ6atOu.png}",
+                                "receipt_footer": null,
+                                "settings": {
+                                    "display_background_image": null,
+                                    "eg_ereceipt_branch_address": {
+                                        "street": null,
+                                        "country": null,
+                                        "governate": "CAIRO",
+                                        "region_city": null,
+                                        "building_number": null
+                                    },
+                                    "is_websocket_notifications_enabled": true,
+                                    "branch_commercial_registration_number": null
+                                },
+                                "created_at": "2024-05-10 12:06:31",
+                                "updated_at": "2025-10-06 10:15:08",
+                                "deleted_at": null,
+                                "receives_online_orders": true,
+                                "accepts_reservations": false,
+                                "reservation_duration": 30,
+                                "reservation_times": null,
+                                "address": null
+                            }
+                        ],
+                        "id": "997085f6-9431-40a8-8ea8-7491ca1a2f59",
+                        "name": "Tasty Sauce",
+                        "name_localized": null,
+                        "sku": "sk-0357",
+                        "is_active": true,
+                        "costing_method": 2,
+                        "price": 20,
+                        "cost": null,
+                        "calories": null,
+                        "created_at": "2023-06-18 10:53:49",
+                        "updated_at": "2025-03-30 21:58:57",
+                        "deleted_at": null,
+                        "index": 0
+                    },
+                    {
+                        "branches": [
+                            {
+                                "pivot": {
+                                    "price": null,
+                                    "is_active": true,
+                                    "is_in_stock": true
+                                },
+                                "id": "9980d0f0-5a3b-4e23-b127-0dab5a2ac57e",
+                                "name": "KFS - NasrCity",
+                                "name_localized": null,
+                                "reference": "B07",
+                                "type": 1,
+                                "latitude": null,
+                                "longitude": null,
+                                "phone": null,
+                                "opening_from": "09:00",
+                                "opening_to": "06:00",
+                                "inventory_end_of_day_time": "06:00",
+                                "receipt_header": "{https:\/\/imgur.com\/3uROwo5.png}",
+                                "receipt_footer": null,
+                                "settings": {
+                                    "branch_tax_number": "579872092",
+                                    "eg_ereceipt_branch_code": "12",
+                                    "display_background_image": null,
+                                    "eg_ereceipt_branch_address": {
+                                        "street": "ابو داوود الظاهري",
+                                        "country": "EG",
+                                        "governate": "Cairo",
+                                        "region_city": "Nasr City",
+                                        "building_number": "2"
+                                    },
+                                    "branch_tax_registration_name": "طارق جمال محمد ابراهيم وشركاه اتريا لاداره المطاعم",
+                                    "eg_ereceipt_branch_activity_code": "5610",
+                                    "is_websocket_notifications_enabled": true,
+                                    "branch_commercial_registration_number": null
+                                },
+                                "created_at": "2023-06-26 13:16:42",
+                                "updated_at": "2025-10-20 09:39:51",
+                                "deleted_at": null,
+                                "receives_online_orders": true,
+                                "accepts_reservations": false,
+                                "reservation_duration": 30,
+                                "reservation_times": null,
+                                "address": "وحدة 2 منشاة سياحية Kaleido plazaحديقة الطفل ابو داوود الظاهري مدينة نصرالقاهره"
+                            },
+                            {
+                                "pivot": {
+                                    "price": null,
+                                    "is_active": false,
+                                    "is_in_stock": true
+                                },
+                                "id": "9c026fc5-dbe9-4e48-924a-b000966a8283",
+                                "name": "Exhibition Land Brn",
+                                "name_localized": null,
+                                "reference": "B08",
+                                "type": 1,
+                                "latitude": null,
+                                "longitude": null,
+                                "phone": null,
+                                "opening_from": "07:00",
+                                "opening_to": "07:00",
+                                "inventory_end_of_day_time": "06:00",
+                                "receipt_header": "{https:\/\/imgur.com\/UQ6atOu.png}",
+                                "receipt_footer": null,
+                                "settings": {
+                                    "display_background_image": null,
+                                    "eg_ereceipt_branch_address": {
+                                        "street": null,
+                                        "country": null,
+                                        "governate": "CAIRO",
+                                        "region_city": null,
+                                        "building_number": null
+                                    },
+                                    "is_websocket_notifications_enabled": true,
+                                    "branch_commercial_registration_number": null
+                                },
+                                "created_at": "2024-05-10 12:06:31",
+                                "updated_at": "2025-10-06 10:15:08",
+                                "deleted_at": null,
+                                "receives_online_orders": true,
+                                "accepts_reservations": false,
+                                "reservation_duration": 30,
+                                "reservation_times": null,
+                                "address": null
+                            }
+                        ],
+                        "id": "9970860f-d4e1-4832-bd98-76185bea47ad",
+                        "name": "Tiger Sauce",
+                        "name_localized": null,
+                        "sku": "sk-0358",
+                        "is_active": true,
+                        "costing_method": 2,
+                        "price": 20,
+                        "cost": null,
+                        "calories": null,
+                        "created_at": "2023-06-18 10:54:05",
+                        "updated_at": "2025-03-30 21:58:41",
+                        "deleted_at": null,
+                        "index": 0
+                    },
+                    {
+                        "branches": [
+                            {
+                                "pivot": {
+                                    "price": null,
+                                    "is_active": true,
+                                    "is_in_stock": true
+                                },
+                                "id": "9980d0f0-5a3b-4e23-b127-0dab5a2ac57e",
+                                "name": "KFS - NasrCity",
+                                "name_localized": null,
+                                "reference": "B07",
+                                "type": 1,
+                                "latitude": null,
+                                "longitude": null,
+                                "phone": null,
+                                "opening_from": "09:00",
+                                "opening_to": "06:00",
+                                "inventory_end_of_day_time": "06:00",
+                                "receipt_header": "{https:\/\/imgur.com\/3uROwo5.png}",
+                                "receipt_footer": null,
+                                "settings": {
+                                    "branch_tax_number": "579872092",
+                                    "eg_ereceipt_branch_code": "12",
+                                    "display_background_image": null,
+                                    "eg_ereceipt_branch_address": {
+                                        "street": "ابو داوود الظاهري",
+                                        "country": "EG",
+                                        "governate": "Cairo",
+                                        "region_city": "Nasr City",
+                                        "building_number": "2"
+                                    },
+                                    "branch_tax_registration_name": "طارق جمال محمد ابراهيم وشركاه اتريا لاداره المطاعم",
+                                    "eg_ereceipt_branch_activity_code": "5610",
+                                    "is_websocket_notifications_enabled": true,
+                                    "branch_commercial_registration_number": null
+                                },
+                                "created_at": "2023-06-26 13:16:42",
+                                "updated_at": "2025-10-20 09:39:51",
+                                "deleted_at": null,
+                                "receives_online_orders": true,
+                                "accepts_reservations": false,
+                                "reservation_duration": 30,
+                                "reservation_times": null,
+                                "address": "وحدة 2 منشاة سياحية Kaleido plazaحديقة الطفل ابو داوود الظاهري مدينة نصرالقاهره"
+                            },
+                            {
+                                "pivot": {
+                                    "price": null,
+                                    "is_active": false,
+                                    "is_in_stock": true
+                                },
+                                "id": "9c026fc5-dbe9-4e48-924a-b000966a8283",
+                                "name": "Exhibition Land Brn",
+                                "name_localized": null,
+                                "reference": "B08",
+                                "type": 1,
+                                "latitude": null,
+                                "longitude": null,
+                                "phone": null,
+                                "opening_from": "07:00",
+                                "opening_to": "07:00",
+                                "inventory_end_of_day_time": "06:00",
+                                "receipt_header": "{https:\/\/imgur.com\/UQ6atOu.png}",
+                                "receipt_footer": null,
+                                "settings": {
+                                    "display_background_image": null,
+                                    "eg_ereceipt_branch_address": {
+                                        "street": null,
+                                        "country": null,
+                                        "governate": "CAIRO",
+                                        "region_city": null,
+                                        "building_number": null
+                                    },
+                                    "is_websocket_notifications_enabled": true,
+                                    "branch_commercial_registration_number": null
+                                },
+                                "created_at": "2024-05-10 12:06:31",
+                                "updated_at": "2025-10-06 10:15:08",
+                                "deleted_at": null,
+                                "receives_online_orders": true,
+                                "accepts_reservations": false,
+                                "reservation_duration": 30,
+                                "reservation_times": null,
+                                "address": null
+                            }
+                        ],
+                        "id": "99708623-e691-491f-8316-e4bde7b315b6",
+                        "name": "Mayo Buffalo Sauce",
+                        "name_localized": null,
+                        "sku": "sk-0359",
+                        "is_active": false,
+                        "costing_method": 2,
+                        "price": 20.9,
+                        "cost": null,
+                        "calories": null,
+                        "created_at": "2023-06-18 10:54:18",
+                        "updated_at": "2025-03-30 21:58:25",
+                        "deleted_at": null,
+                        "index": 0
+                    },
+                    {
+                        "branches": [
+                            {
+                                "pivot": {
+                                    "price": null,
+                                    "is_active": true,
+                                    "is_in_stock": true
+                                },
+                                "id": "9980d0f0-5a3b-4e23-b127-0dab5a2ac57e",
+                                "name": "KFS - NasrCity",
+                                "name_localized": null,
+                                "reference": "B07",
+                                "type": 1,
+                                "latitude": null,
+                                "longitude": null,
+                                "phone": null,
+                                "opening_from": "09:00",
+                                "opening_to": "06:00",
+                                "inventory_end_of_day_time": "06:00",
+                                "receipt_header": "{https:\/\/imgur.com\/3uROwo5.png}",
+                                "receipt_footer": null,
+                                "settings": {
+                                    "branch_tax_number": "579872092",
+                                    "eg_ereceipt_branch_code": "12",
+                                    "display_background_image": null,
+                                    "eg_ereceipt_branch_address": {
+                                        "street": "ابو داوود الظاهري",
+                                        "country": "EG",
+                                        "governate": "Cairo",
+                                        "region_city": "Nasr City",
+                                        "building_number": "2"
+                                    },
+                                    "branch_tax_registration_name": "طارق جمال محمد ابراهيم وشركاه اتريا لاداره المطاعم",
+                                    "eg_ereceipt_branch_activity_code": "5610",
+                                    "is_websocket_notifications_enabled": true,
+                                    "branch_commercial_registration_number": null
+                                },
+                                "created_at": "2023-06-26 13:16:42",
+                                "updated_at": "2025-10-20 09:39:51",
+                                "deleted_at": null,
+                                "receives_online_orders": true,
+                                "accepts_reservations": false,
+                                "reservation_duration": 30,
+                                "reservation_times": null,
+                                "address": "وحدة 2 منشاة سياحية Kaleido plazaحديقة الطفل ابو داوود الظاهري مدينة نصرالقاهره"
+                            },
+                            {
+                                "pivot": {
+                                    "price": null,
+                                    "is_active": false,
+                                    "is_in_stock": true
+                                },
+                                "id": "9c026fc5-dbe9-4e48-924a-b000966a8283",
+                                "name": "Exhibition Land Brn",
+                                "name_localized": null,
+                                "reference": "B08",
+                                "type": 1,
+                                "latitude": null,
+                                "longitude": null,
+                                "phone": null,
+                                "opening_from": "07:00",
+                                "opening_to": "07:00",
+                                "inventory_end_of_day_time": "06:00",
+                                "receipt_header": "{https:\/\/imgur.com\/UQ6atOu.png}",
+                                "receipt_footer": null,
+                                "settings": {
+                                    "display_background_image": null,
+                                    "eg_ereceipt_branch_address": {
+                                        "street": null,
+                                        "country": null,
+                                        "governate": "CAIRO",
+                                        "region_city": null,
+                                        "building_number": null
+                                    },
+                                    "is_websocket_notifications_enabled": true,
+                                    "branch_commercial_registration_number": null
+                                },
+                                "created_at": "2024-05-10 12:06:31",
+                                "updated_at": "2025-10-06 10:15:08",
+                                "deleted_at": null,
+                                "receives_online_orders": true,
+                                "accepts_reservations": false,
+                                "reservation_duration": 30,
+                                "reservation_times": null,
+                                "address": null
+                            }
+                        ],
+                        "id": "99a0ed0e-b489-4329-a49d-e7ea9d327c80",
+                        "name": "Mayohang Sauce",
+                        "name_localized": null,
+                        "sku": "sk-0437",
+                        "is_active": true,
+                        "costing_method": 2,
+                        "price": 20,
+                        "cost": null,
+                        "calories": null,
+                        "created_at": "2023-07-12 12:21:49",
+                        "updated_at": "2025-03-30 21:57:57",
+                        "deleted_at": null,
+                        "index": 0
+                    }
+                ],
+                "pivot": {
+                    "is_splittable_in_half": false,
+                    "unique_options": false,
+                    "minimum_options": 0,
+                    "maximum_options": 7,
+                    "free_options": 0,
+                    "default_options_ids": [],
+                    "excluded_options_ids": [],
+                    "index": 0
+                },
+                "id": "997084cd-10fe-470b-a1ec-a44cd2a00a10",
+                "name": "Extra Sauce",
+                "name_localized": null,
+                "is_ready": true,
+                "reference": "extra-sauce",
+                "created_at": "2023-06-18 10:50:34",
+                "updated_at": "2025-03-30 21:59:43",
+                "deleted_at": null
+            }
+        ],
+        "ingredients": [],
+        "id": "9956589a-8b9d-4418-979d-448cfa54ac36",
+        "sku": "sk-0252",
+        "barcode": null,
+        "name": "Flavious",
+        "name_localized": null,
+        "description": null,
+        "description_localized": null,
+        "image": "https:\/\/foodics-console-production.s3.eu-west-1.amazonaws.com\/images\/448295_1687801645_998131c1-665c-446b-89f4-9bbb021077e4.jpg",
+        "is_active": true,
+        "is_stock_product": false,
+        "is_non_revenue": false,
+        "is_ready": true,
+        "pricing_method": 1,
+        "selling_method": 1,
+        "costing_method": 2,
+        "preparation_time": null,
+        "price": 0,
+        "cost": null,
+        "calories": null,
+        "walking_minutes_to_burn_calories": null,
+        "is_high_salt": false,
+        "created_at": "2023-06-05 10:35:27",
+        "updated_at": "2025-01-01 12:38:32",
+        "deleted_at": null,
+        "meta": {
+            "eg_ereceipt_item_code": "EG-579872092-0252",
+            "eg_ereceipt_item_type": "EGS",
+            "eg_ereceipt_unit_type": "EA"
+        },
+        "price_tags": [
+            {
+                "id": "9ddd4513-542a-46e6-9cd5-592b631049a6",
+                "name": "ElMenues Online %10",
+                "name_localized": null,
+                "order_tag_id": "999ea7f1-5033-4807-8eb8-99ed1b6f54aa",
+                "associate_to_all_branches": true,
+                "created_at": "2025-01-01 13:05:22",
+                "updated_at": "2025-11-03 19:08:48",
+                "deleted_at": null,
+                "pivot": {
+                    "product_id": "9956589a-8b9d-4418-979d-448cfa54ac36",
+                    "price_tag_id": "9ddd4513-542a-46e6-9cd5-592b631049a6",
+                    "price": 0
+                }
+            },
+            {
+                "id": "9ddd45b7-1385-4e6b-a5ab-e3dde741e4db",
+                "name": "Marsool Online 10%",
+                "name_localized": null,
+                "order_tag_id": "9978d2e1-e25c-41b8-9615-e6998c069653",
+                "associate_to_all_branches": true,
+                "created_at": "2025-01-01 13:07:09",
+                "updated_at": "2025-11-03 19:05:23",
+                "deleted_at": null,
+                "pivot": {
+                    "product_id": "9956589a-8b9d-4418-979d-448cfa54ac36",
+                    "price_tag_id": "9ddd45b7-1385-4e6b-a5ab-e3dde741e4db",
+                    "price": 0
+                }
+            },
+            {
+                "id": "9ddd6ecc-19b4-4076-aefd-015b1624b3b4",
+                "name": "Talabat Online 10%",
+                "name_localized": null,
+                "order_tag_id": "9978a3d2-34dd-485d-9539-199d68617312",
+                "associate_to_all_branches": true,
+                "created_at": "2025-01-01 15:02:02",
+                "updated_at": "2025-11-03 19:04:38",
+                "deleted_at": null,
+                "pivot": {
+                    "product_id": "9956589a-8b9d-4418-979d-448cfa54ac36",
+                    "price_tag_id": "9ddd6ecc-19b4-4076-aefd-015b1624b3b4",
+                    "price": 0
+                }
+            },
+            {
+                "id": "a004aa3e-8f8c-48bc-88d5-be5d745097ae",
+                "name": "Instashop",
+                "name_localized": null,
+                "order_tag_id": "9fbbc7bd-0f9c-4b29-8515-4f30f27e1455",
+                "associate_to_all_branches": true,
+                "created_at": "2025-10-02 15:29:25",
+                "updated_at": "2025-11-03 19:06:24",
+                "deleted_at": null,
+                "pivot": {
+                    "product_id": "9956589a-8b9d-4418-979d-448cfa54ac36",
+                    "price_tag_id": "a004aa3e-8f8c-48bc-88d5-be5d745097ae",
+                    "price": 0
+                }
+            },
+            {
+                "id": "a004abd7-4ad0-4c58-bbd4-8ef111506072",
+                "name": "Hadeer",
+                "name_localized": null,
+                "order_tag_id": "9f8b6bd2-ddeb-4cfb-b4a0-693f306a76b2",
+                "associate_to_all_branches": true,
+                "created_at": "2025-10-02 15:33:53",
+                "updated_at": "2025-11-03 19:07:47",
+                "deleted_at": null,
+                "pivot": {
+                    "product_id": "9956589a-8b9d-4418-979d-448cfa54ac36",
+                    "price_tag_id": "a004abd7-4ad0-4c58-bbd4-8ef111506072",
+                    "price": 0
+                }
+            },
+            {
+                "id": "a004ac22-c569-408a-bd38-040dfa79da68",
+                "name": "Hurry App",
+                "name_localized": null,
+                "order_tag_id": "9e7e1933-b692-48b2-8acc-600e78d39454",
+                "associate_to_all_branches": true,
+                "created_at": "2025-10-02 15:34:42",
+                "updated_at": "2025-11-03 19:07:12",
+                "deleted_at": null,
+                "pivot": {
+                    "product_id": "9956589a-8b9d-4418-979d-448cfa54ac36",
+                    "price_tag_id": "a004ac22-c569-408a-bd38-040dfa79da68",
+                    "price": 0
+                }
+            }
+        ],
+        "discounts": [],
+        "timed_events": []
+    },
+    "cached_at": 1764973273,
+    "cached_at_readable": "2025-12-05 23:21:13"
+}

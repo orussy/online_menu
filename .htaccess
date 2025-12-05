@@ -19,7 +19,7 @@
     Deny from all
 </Files>
 
-<Files "product_modifier_prices.json">
+<Files "cache.php">
     Order Allow,Deny
     Deny from all
 </Files>
@@ -33,6 +33,12 @@
     Order Allow,Deny
     Deny from all
 </Files>
+
+# Block direct access to cache directory
+<FilesMatch "^cache/">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
 
 # Prevent directory listing
 Options -Indexes
