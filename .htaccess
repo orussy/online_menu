@@ -1,0 +1,40 @@
+# Secure sensitive files - block direct access
+<Files "config.php">
+    Order Allow,Deny
+    Deny from all
+</Files>
+
+<Files "api.php">
+    Order Allow,Deny
+    Deny from all
+</Files>
+
+<Files "hidden_products.json">
+    Order Allow,Deny
+    Deny from all
+</Files>
+
+<Files "hidden_categories.json">
+    Order Allow,Deny
+    Deny from all
+</Files>
+
+<Files "README.md">
+    Order Allow,Deny
+    Deny from all
+</Files>
+
+<Files ".htaccess">
+    Order Allow,Deny
+    Deny from all
+</Files>
+
+# Prevent directory listing
+Options -Indexes
+
+# Security headers
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set X-XSS-Protection "1; mode=block"
+</IfModule>
