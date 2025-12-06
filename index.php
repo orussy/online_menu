@@ -236,14 +236,35 @@ function getPriceFromModifiers($api, $product) {
                     }
                     
                     // Check if this is a single or double size
-                    if (strpos($optionNameLower, 'single') !== false || strpos($optionNameLower, 'small') !== false || strpos($optionNameLower, 'regular') !== false || strpos($optionNameLower, '1 ') !== false || strpos($optionNameLower, '2 ') !== false || strpos($optionNameLower, 'original') !== false || strpos($optionNameLower, 'spicy') !== false || strpos($optionNameLower, 'ranch') !== false || strpos($optionNameLower, 'buffalo') !== false) {
+                    // Priority: Check size-specific keywords first (mini/stander/standard), then generic keywords
+                    $isSingleSize = false;
+                    $isDoubleSize = false;
+                    
+                    // Check for size-specific keywords first (these take priority)
+                    if (strpos($optionNameLower, 'mini') !== false) {
+                        $isSingleSize = true;
+                    } elseif (strpos($optionNameLower, 'stander') !== false || strpos($optionNameLower, 'standard') !== false) {
+                        $isDoubleSize = true;
+                    }
+                    
+                    // If no size-specific keyword found, check generic keywords
+                    if (!$isSingleSize && !$isDoubleSize) {
+                        if (strpos($optionNameLower, 'single') !== false || strpos($optionNameLower, 'small') !== false || strpos($optionNameLower, 'regular') !== false || strpos($optionNameLower, '1 ') !== false || strpos($optionNameLower, '2 ') !== false || strpos($optionNameLower, 'original') !== false || strpos($optionNameLower, 'spicy') !== false || strpos($optionNameLower, 'ranch') !== false || strpos($optionNameLower, 'buffalo') !== false) {
+                            $isSingleSize = true;
+                        } elseif (strpos($optionNameLower, 'double') !== false || strpos($optionNameLower, 'large') !== false || strpos($optionNameLower, 'big') !== false || strpos($optionNameLower, '3 ') !== false || strpos($optionNameLower, '6 ') !== false) {
+                            $isDoubleSize = true;
+                        }
+                    }
+                    
+                    // Set prices based on size classification
+                    if ($isSingleSize) {
                         if ($singlePrice === null || $optionPrice < ($singlePrice ?: 999999)) {
                             $singlePrice = $optionPrice;
                             if ($needsCustomLabels) {
                                 $singleLabel = $optionName;
                             }
                         }
-                    } elseif (strpos($optionNameLower, 'double') !== false || strpos($optionNameLower, 'large') !== false || strpos($optionNameLower, 'big') !== false || strpos($optionNameLower, '3 ') !== false || strpos($optionNameLower, '6 ') !== false) {
+                    } elseif ($isDoubleSize) {
                         if ($doublePrice === null || $optionPrice > ($doublePrice ?: 0)) {
                             $doublePrice = $optionPrice;
                             if ($needsCustomLabels) {
