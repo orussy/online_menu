@@ -215,16 +215,42 @@ function getPriceFromModifiers($api, $product) {
             
             // Process options from modifier
             foreach ($options as $option) {
-                // Skip deleted options
+                // Skip deleted or inactive options
                 if (!empty($option['deleted_at'])) {
+                    continue;
+                }
+                if (isset($option['is_active']) && $option['is_active'] === false) {
                     continue;
                 }
                 
                 $optionName = $option['name'] ?? '';
                 $optionNameLower = strtolower($optionName);
-                $optionPrice = isset($option['price']) ? floatval($option['price']) : 0;
                 
-                if ($optionPrice > 0) {
+                // Prefer explicit option price; otherwise use the lowest active/in-stock branch price
+                $optionPrice = null;
+                if (isset($option['price']) && $option['price'] !== null) {
+                    $optionPrice = floatval($option['price']);
+                } elseif (!empty($option['branches']) && is_array($option['branches'])) {
+                    $branchPrices = array_filter(array_map(function($branch) {
+                        $pivot = $branch['pivot'] ?? null;
+                        if (!$pivot) {
+                            return null;
+                        }
+                        $isActive = $pivot['is_active'] ?? true;
+                        $inStock = $pivot['is_in_stock'] ?? true;
+                        $price = $pivot['price'] ?? null;
+                        if ($isActive && $inStock && $price !== null) {
+                            return floatval($price);
+                        }
+                        return null;
+                    }, $option['branches']));
+                    
+                    if (!empty($branchPrices)) {
+                        $optionPrice = min($branchPrices); // Show the lowest available active branch price
+                    }
+                }
+                
+                if ($optionPrice !== null && $optionPrice > 0) {
                     $allPrices[] = $optionPrice;
                     
                     // For custom label products, store option name with price
@@ -452,36 +478,62 @@ function getPlaceholderImage($text) {
                             $hasModifiersInData = !empty($product['modifiers']) && count($product['modifiers']) > 0;
                             
                             // Only use modifier prices if:
-                            // 1. Product price is 0 (free), OR
-                            // 2. Product has modifiers in the API response
-                            // Otherwise, use the product's base price
+                            // Prefer modifier prices when available; otherwise fall back to base price.
                             $displayPrice = null;
-                            if ($productPrice == 0 || $hasModifiersInData) {
-                                // Product is free or has modifiers - check modifiers from product data
+                            $categoryId = $product['category']['id'] ?? null;
+                            $forceModifierPricing = ($categoryId === '994ec5d4-234c-4e84-b423-857f900ea24c'); // Chicken Meal category
+                            
+                            // Use modifier pricing for targeted category; otherwise only when base price is 0 or product carries modifiers.
+                            $shouldUseModifiers = $forceModifierPricing || $productPrice == 0 || $hasModifiersInData;
+                            
+                            if ($shouldUseModifiers) {
                                 $modifierPrice = getPriceFromModifiers($api, $product);
                                 if ($modifierPrice !== null) {
                                     if (is_array($modifierPrice)) {
                                         // Check if it's single/double prices
                                         if (isset($modifierPrice['single']) && isset($modifierPrice['double'])) {
-                                            // Use custom labels if provided, otherwise default labels
-                                            $singleLabel = $modifierPrice['single_label'] ?? '(Single)';
-                                            $doubleLabel = $modifierPrice['double_label'] ?? '(Double)';
+                                            // If product should show a single price only, collapse to single
+                                            $forceSingleOnlyProducts = [
+                                                '994ed07b-d9ed-424a-8e11-a08ac9a0f9f9',
+                                                '9aa0a4c1-8dc5-4984-a3b1-e480d76d19f0'
+                                            ];
+                                            $showSingleOnly = in_array($product['id'] ?? '', $forceSingleOnlyProducts);
                                             
-                                            // Special case for Bun product
-                                            if ($product['id'] === '995ac081-2b3a-4442-96b4-aae0e5bb380a') {
-                                                $singleLabel = '(1 Bun)';
-                                                $doubleLabel = '(3 Bun)';
+                                            if ($showSingleOnly) {
+                                                $displayPrice = formatPrice($modifierPrice['single']);
+                                                $hasModifiers = true;
+                                            } else {
+                                                // Use custom labels if provided, otherwise default labels
+                                                $singleLabel = $modifierPrice['single_label'] ?? '(Single)';
+                                                $doubleLabel = $modifierPrice['double_label'] ?? '(Double)';
+                                                
+                                                // Per-product label overrides (e.g., Small/Large)
+                                                $customSizeLabels = [
+                                                    '994ed07c-ef29-45f6-ba41-dfb4e7bfa8e7' => ['single' => '(Small)', 'double' => '(Large)'],
+                                                    '994ed07d-5ade-4eba-b4ae-eafd5f72ae5e' => ['single' => '(Small)', 'double' => '(Large)'],
+                                                ];
+                                                $pid = $product['id'] ?? '';
+                                                if (isset($customSizeLabels[$pid])) {
+                                                    $singleLabel = $customSizeLabels[$pid]['single'];
+                                                    $doubleLabel = $customSizeLabels[$pid]['double'];
+                                                }
+                                                
+                                                // Special case for Bun product
+                                                if ($product['id'] === '995ac081-2b3a-4442-96b4-aae0e5bb380a') {
+                                                    $singleLabel = '(1 Bun)';
+                                                    $doubleLabel = '(3 Bun)';
+                                                }
+                                                
+                                                // Format labels with parentheses if not already present
+                                                if (!empty($singleLabel) && $singleLabel[0] !== '(') {
+                                                    $singleLabel = '(' . $singleLabel . ')';
+                                                }
+                                                if (!empty($doubleLabel) && $doubleLabel[0] !== '(') {
+                                                    $doubleLabel = '(' . $doubleLabel . ')';
+                                                }
+                                                
+                                                $displayPrice = formatPrice($modifierPrice['single']) . ' <span style="font-size: 0.85em; color: #666;">' . $singleLabel . '</span> / ' . formatPrice($modifierPrice['double']) . ' <span style="font-size: 0.85em; color: #666;">' . $doubleLabel . '</span>';
                                             }
-                                            
-                                            // Format labels with parentheses if not already present
-                                            if (!empty($singleLabel) && $singleLabel[0] !== '(') {
-                                                $singleLabel = '(' . $singleLabel . ')';
-                                            }
-                                            if (!empty($doubleLabel) && $doubleLabel[0] !== '(') {
-                                                $doubleLabel = '(' . $doubleLabel . ')';
-                                            }
-                                            
-                                            $displayPrice = formatPrice($modifierPrice['single']) . ' <span style="font-size: 0.85em; color: #666;">' . $singleLabel . '</span> / ' . formatPrice($modifierPrice['double']) . ' <span style="font-size: 0.85em; color: #666;">' . $doubleLabel . '</span>';
                                         } elseif (isset($modifierPrice['min']) && isset($modifierPrice['max'])) {
                                             // Price range
                                             $displayPrice = formatPrice($modifierPrice['min']) . ' - ' . formatPrice($modifierPrice['max']);
