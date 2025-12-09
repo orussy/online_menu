@@ -237,8 +237,8 @@ body {
     }
     
     .cards-container {
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-        gap: 15px;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
     }
     
     .page-header h2 {
